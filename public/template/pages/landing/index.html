@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Landing Page</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+<!-- Top Navigation -->
+<header class="sticky top-0 z-40 bg-[#f3f5f4]/85 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-5 py-3.5 flex items-center justify-between gap-4">
+        <a href="index.html" class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-2xl bg-brand-800 text-white flex items-center justify-center shadow-md">
+                <svg class="w-5 h-5 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <div><p class="font-extrabold text-lg text-gray-900 tracking-tight leading-none">Donezo</p><p class="text-[8px] font-bold uppercase tracking-wider text-brand-600 mt-0.5">Project OS</p></div>
+        </a>
+        <nav class="hidden lg:flex items-center gap-7 text-xs font-bold text-gray-600">
+            <a href="#features" class="hover:text-brand-800 transition">Features</a>
+            <a href="#modules" class="hover:text-brand-800 transition">Modules</a>
+            <a href="../saas/pricing.html" class="hover:text-brand-800 transition">Pricing</a>
+            <a href="../saas/about.html" class="hover:text-brand-800 transition">About</a>
+            <a href="../support/knowledge-base.html" class="hover:text-brand-800 transition">Docs</a>
+        </nav>
+        <div class="flex items-center gap-2">
+            <a href="../auth/login.html" class="donezo-btn donezo-btn-ghost hidden sm:inline-flex">Sign In</a>
+            <a href="../auth/register.html" class="donezo-btn donezo-btn-primary">Get Started</a>
+            <button id="open-sidebar-btn" class="lg:hidden p-2 rounded-2xl bg-white text-gray-600 shadow-sm border border-gray-100"><i data-lucide="menu" class="w-5 h-5"></i></button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="relative overflow-hidden">
+    <div class="absolute -top-32 -right-24 w-[28rem] h-[28rem] rounded-full bg-brand-100/70"></div>
+    <div class="absolute top-40 -left-32 w-96 h-96 rounded-full bg-brand-50"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-5 pt-16 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+            <span class="inline-flex items-center gap-2 text-[10px] font-extrabold bg-white border border-brand-100 text-brand-800 px-3 py-1.5 rounded-full shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>VERSION 1.0 · 60+ PAGES READY</span>
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight leading-[1.1] mt-6">The admin console your team actually enjoys using.</h1>
+            <p class="text-sm text-gray-500 mt-5 leading-relaxed max-w-md">Donezo is a production-ready dashboard template covering commerce, POS, CRM, HR, inventory, finance, support, healthcare, and projects. One green design language, zero CDN dependencies, and markup that drops straight into Laravel Blade.</p>
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-8">
+                <a href="../auth/register.html" class="donezo-btn donezo-btn-primary px-6 py-3"><i data-lucide="rocket" class="w-4 h-4"></i><span>Start Free Trial</span></a>
+                <a href="../../index.html" class="donezo-btn donezo-btn-secondary px-6 py-3"><i data-lucide="play" class="w-4 h-4"></i><span>View Live Demo</span></a>
+            </div>
+            <div class="flex items-center gap-6 mt-10">
+                <div class="flex -space-x-2.5">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover border-2 border-white" alt="User">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover border-2 border-white" alt="User">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover border-2 border-white" alt="User">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover border-2 border-white" alt="User">
+                </div>
+                <div><div class="flex items-center gap-1"><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400 text-amber-400"></i><span class="text-xs font-extrabold text-gray-900 ml-1.5">4.9</span></div><p class="text-[10px] text-gray-500 font-semibold mt-1">Trusted by 14,000+ workspaces</p></div>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="donezo-card p-3 shadow-floating rotate-1">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=900" alt="Dashboard preview" class="w-full rounded-2xl object-cover" style="height:320px">
+            </div>
+            <div class="absolute -bottom-6 -left-4 sm:left-6 donezo-card p-4 shadow-card w-56 -rotate-2">
+                <div class="flex items-center gap-2.5"><span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><i data-lucide="trending-up" class="w-4 h-4"></i></span><div><p class="text-[10px] text-gray-500 font-semibold">Revenue this month</p><p class="text-sm font-extrabold text-gray-900">$412,600</p></div></div>
+                <div class="w-full h-1.5 bg-gray-100 rounded-full mt-3"><div class="h-1.5 bg-brand-800 rounded-full" style="width:76%"></div></div>
+            </div>
+            <div class="absolute -top-4 -right-2 sm:right-4 donezo-card p-3.5 shadow-card flex items-center gap-2.5 rotate-3">
+                <span class="w-8 h-8 rounded-xl bg-brand-800 text-white flex items-center justify-center"><i data-lucide="check" class="w-4 h-4"></i></span>
+                <div><p class="text-[11px] font-bold text-gray-900">Deploy ready</p><p class="text-[10px] text-gray-400">No build step</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Logos -->
+<section class="border-y border-gray-100 bg-white/60">
+    <div class="max-w-6xl mx-auto px-5 py-8 flex flex-col sm:flex-row items-center justify-between gap-5">
+        <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Used by operations teams at</p>
+        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-extrabold text-gray-300">
+            <span>NORDWIND</span><span>KOPILOGI</span><span>GUDANGKU</span><span>BUKUGURU</span><span>MEDIKA</span><span>RETAILKU</span>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="max-w-6xl mx-auto px-5 py-20">
+    <div class="text-center max-w-xl mx-auto">
+        <span class="text-[10px] font-extrabold bg-brand-50 text-brand-800 px-3 py-1.5 rounded-full">WHY DONEZO</span>
+        <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight mt-4">Built to be shipped, not just admired</h2>
+        <p class="text-xs text-gray-500 mt-3 leading-relaxed">Every asset is local, every component is documented, and every page shares the same navigation engine.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+        <div class="donezo-card p-6"><div class="w-11 h-11 rounded-2xl bg-brand-800 text-white flex items-center justify-center"><i data-lucide="package" class="w-5 h-5"></i></div><p class="text-sm font-bold text-gray-900 mt-4">Fully self-contained</p><p class="text-[11px] text-gray-500 mt-1.5 leading-relaxed">Tailwind CSS precompiled, Chart.js and Lucide vendored, fonts shipped as woff2. It runs on an intranet with no external requests.</p></div>
+        <div class="donezo-card p-6"><div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-800 flex items-center justify-center"><i data-lucide="code-2" class="w-5 h-5"></i></div><p class="text-sm font-bold text-gray-900 mt-4">Blade-ready markup</p><p class="text-[11px] text-gray-500 mt-1.5 leading-relaxed">Semantic HTML with data attributes and vanilla JS helpers, so pages convert to Laravel partials without a bundler.</p></div>
+        <div class="donezo-card p-6"><div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-800 flex items-center justify-center"><i data-lucide="box" class="w-5 h-5"></i></div><p class="text-sm font-bold text-gray-900 mt-4">Copyable components</p><p class="text-[11px] text-gray-500 mt-1.5 leading-relaxed">18 reference pages with preview and code tabs plus a one-click copy button for each snippet.</p></div>
+        <div class="donezo-card p-6"><div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-800 flex items-center justify-center"><i data-lucide="navigation" class="w-5 h-5"></i></div><p class="text-sm font-bold text-gray-900 mt-4">One navigation engine</p><p class="text-[11px] text-gray-500 mt-1.5 leading-relaxed">A single script renders the sidebar on every page, detects the active route, and adapts to any folder depth.</p></div>
+        <div class="donezo-card p-6"><div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-800 flex items-center justify-center"><i data-lucide="smartphone" class="w-5 h-5"></i></div><p class="text-sm font-bold text-gray-900 mt-4">Touch-first responsive</p><p class="text-[11px] text-gray-500 mt-1.5 leading-relaxed">The sidebar becomes a drawer, tables scroll horizontally, and POS screens keep large tap targets.</p></div>
+        <div class="donezo-card p-6"><div class="w-11 h-11 rounded-2xl bg-brand-50 text-brand-800 flex items-center justify-center"><i data-lucide="palette" class="w-5 h-5"></i></div><p class="text-sm font-bold text-gray-900 mt-4">One design language</p><p class="text-[11px] text-gray-500 mt-1.5 leading-relaxed">Signature deep green, 1.5rem radii, soft card shadows, and consistent status pill colours across all modules.</p></div>
+    </div>
+</section>
+
+<!-- Modules -->
+<section id="modules" class="bg-white border-y border-gray-100">
+    <div class="max-w-6xl mx-auto px-5 py-20">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div><span class="text-[10px] font-extrabold bg-brand-50 text-brand-800 px-3 py-1.5 rounded-full">MODULES</span><h2 class="text-3xl font-extrabold text-gray-900 tracking-tight mt-4">A page for every department</h2></div>
+            <a href="../../index.html" class="donezo-btn donezo-btn-secondary">Explore the Demo</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 mt-10">
+            <a href="../admin/dashboard.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="layout-grid" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Admin</p><p class="text-[10px] text-gray-400 mt-0.5">9 pages</p></a>
+            <a href="../ecommerce/products.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="shopping-cart" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">E-Commerce</p><p class="text-[10px] text-gray-400 mt-0.5">8 pages</p></a>
+            <a href="../pos/cashier.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="calculator" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Point of Sale</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../crm/deals.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="contact" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">CRM</p><p class="text-[10px] text-gray-400 mt-0.5">5 pages</p></a>
+            <a href="../hr/employees.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="users-round" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Human Resources</p><p class="text-[10px] text-gray-400 mt-0.5">5 pages</p></a>
+            <a href="../inventory/stock.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="boxes" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Inventory</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../finance/transactions.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="wallet" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Finance</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../support/tickets.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="life-buoy" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Support</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../projects/kanban.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="folder-kanban" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Projects</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../healthcare/patients.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="heart-pulse" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">Healthcare</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../saas/pricing.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="globe" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">SaaS Pages</p><p class="text-[10px] text-gray-400 mt-0.5">4 pages</p></a>
+            <a href="../../components/buttons.html" class="donezo-card p-4 hover:border-brand-300 transition"><i data-lucide="box" class="w-5 h-5 text-brand-800"></i><p class="text-xs font-bold text-gray-900 mt-3">UI Components</p><p class="text-[10px] text-gray-400 mt-0.5">18 references</p></a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="bg-brand-800 relative overflow-hidden">
+    <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-white/5"></div>
+    <div class="absolute -left-16 -bottom-24 w-72 h-72 rounded-full bg-brand-700/70"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-5 py-16 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <div><p class="text-4xl font-extrabold text-white tracking-tight">60+</p><p class="text-[11px] text-brand-300 font-bold mt-1.5 uppercase tracking-wider">Ready Pages</p></div>
+        <div><p class="text-4xl font-extrabold text-white tracking-tight">18</p><p class="text-[11px] text-brand-300 font-bold mt-1.5 uppercase tracking-wider">Component Sets</p></div>
+        <div><p class="text-4xl font-extrabold text-white tracking-tight">14K</p><p class="text-[11px] text-brand-300 font-bold mt-1.5 uppercase tracking-wider">Workspaces</p></div>
+        <div><p class="text-4xl font-extrabold text-white tracking-tight">0</p><p class="text-[11px] text-brand-300 font-bold mt-1.5 uppercase tracking-wider">CDN Requests</p></div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="max-w-6xl mx-auto px-5 py-20">
+    <div class="text-center max-w-xl mx-auto"><span class="text-[10px] font-extrabold bg-brand-50 text-brand-800 px-3 py-1.5 rounded-full">TESTIMONIALS</span><h2 class="text-3xl font-extrabold text-gray-900 tracking-tight mt-4">Teams ship faster with Donezo</h2></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+        <div class="donezo-card p-6"><div class="flex items-center gap-1 mb-4"><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i></div><p class="text-xs text-gray-600 leading-relaxed">"We replaced four internal tools with one template and shipped the warehouse console in nine days. The offline assets mattered because our depot Wi-Fi is unreliable."</p><div class="flex items-center gap-3 mt-5 pt-5 border-t border-gray-100"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover"><div><p class="text-xs font-bold text-gray-900">Dimas Saputra</p><p class="text-[10px] text-gray-400">Head of Operations, Gudangku</p></div></div></div>
+        <div class="donezo-card p-6"><div class="flex items-center gap-1 mb-4"><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i></div><p class="text-xs text-gray-600 leading-relaxed">"Component pages with copy buttons cut our front-end handoff in half. Designers and developers finally speak the same class names."</p><div class="flex items-center gap-3 mt-5 pt-5 border-t border-gray-100"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover"><div><p class="text-xs font-bold text-gray-900">Sarah Wijaya</p><p class="text-[10px] text-gray-400">Product Designer, BukuGuru</p></div></div></div>
+        <div class="donezo-card p-6"><div class="flex items-center gap-1 mb-4"><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i></div><p class="text-xs text-gray-600 leading-relaxed">"Our Laravel backend dropped these pages in as Blade partials over a weekend. No bundler config, no dependency conflicts."</p><div class="flex items-center gap-3 mt-5 pt-5 border-t border-gray-100"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=80" class="w-9 h-9 rounded-full object-cover"><div><p class="text-xs font-bold text-gray-900">Bagas Nugroho</p><p class="text-[10px] text-gray-400">CTO, Tani Labs</p></div></div></div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="max-w-6xl mx-auto px-5 pb-20">
+    <div class="donezo-card p-10 sm:p-14 bg-brand-800 border-0 text-center relative overflow-hidden">
+        <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/5"></div>
+        <div class="absolute -left-12 -bottom-20 w-56 h-56 rounded-full bg-white/5"></div>
+        <div class="relative z-10">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight max-w-lg mx-auto leading-snug">Ready to put your operations on one screen?</h2>
+            <p class="text-xs text-brand-200 mt-3 max-w-md mx-auto leading-relaxed">Start free with the Starter plan or trial Professional for 14 days. No credit card, no setup call.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+                <a href="../auth/register.html" class="w-full sm:w-auto py-3 px-6 bg-white text-brand-800 rounded-2xl text-xs font-extrabold hover:bg-brand-50 transition flex items-center justify-center gap-2"><i data-lucide="rocket" class="w-4 h-4"></i>Create Free Account</a>
+                <a href="../saas/contact.html" class="donezo-btn donezo-btn-ghost border border-white/25 text-white w-full sm:w-auto"><i data-lucide="message-circle" class="w-4 h-4"></i><span>Talk to Sales</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-5 py-14 grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div class="col-span-2 md:col-span-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-2xl bg-brand-800 text-white flex items-center justify-center"><svg class="w-5 h-5 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+                <p class="font-extrabold text-lg text-gray-900 tracking-tight">Donezo</p>
+            </div>
+            <p class="text-[11px] text-gray-500 mt-4 leading-relaxed max-w-xs">A production-ready admin and dashboard template with the Donezo Green design language. Built for teams that ship.</p>
+            <div class="flex items-center gap-2 mt-5">
+                <button onclick="triggerToast('info','Social','Opening Twitter profile.')" class="w-9 h-9 rounded-2xl bg-gray-50 text-gray-500 hover:text-brand-800 hover:bg-brand-50 flex items-center justify-center transition"><i data-lucide="twitter" class="w-4 h-4"></i></button>
+                <button onclick="triggerToast('info','Social','Opening GitHub repository.')" class="w-9 h-9 rounded-2xl bg-gray-50 text-gray-500 hover:text-brand-800 hover:bg-brand-50 flex items-center justify-center transition"><i data-lucide="github" class="w-4 h-4"></i></button>
+                <button onclick="triggerToast('info','Social','Opening LinkedIn page.')" class="w-9 h-9 rounded-2xl bg-gray-50 text-gray-500 hover:text-brand-800 hover:bg-brand-50 flex items-center justify-center transition"><i data-lucide="linkedin" class="w-4 h-4"></i></button>
+                <button onclick="triggerToast('info','Social','Opening Instagram profile.')" class="w-9 h-9 rounded-2xl bg-gray-50 text-gray-500 hover:text-brand-800 hover:bg-brand-50 flex items-center justify-center transition"><i data-lucide="instagram" class="w-4 h-4"></i></button>
+            </div>
+        </div>
+        <div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-3">Product</p>
+            <div class="space-y-2 text-[11px] font-semibold text-gray-600">
+                <p><a href="#features" class="hover:text-brand-800">Features</a></p>
+                <p><a href="#modules" class="hover:text-brand-800">Modules</a></p>
+                <p><a href="../saas/pricing.html" class="hover:text-brand-800">Pricing</a></p>
+                <p><a href="../../index.html" class="hover:text-brand-800">Live Demo</a></p>
+            </div>
+        </div>
+        <div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-3">Resources</p>
+            <div class="space-y-2 text-[11px] font-semibold text-gray-600">
+                <p><a href="../support/knowledge-base.html" class="hover:text-brand-800">Knowledge Base</a></p>
+                <p><a href="../support/faq.html" class="hover:text-brand-800">FAQ</a></p>
+                <p><a href="../../components/buttons.html" class="hover:text-brand-800">Components</a></p>
+                <p><a href="../support/tickets.html" class="hover:text-brand-800">Support</a></p>
+            </div>
+        </div>
+        <div>
+            <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-3">Company</p>
+            <div class="space-y-2 text-[11px] font-semibold text-gray-600">
+                <p><a href="../saas/about.html" class="hover:text-brand-800">About</a></p>
+                <p><a href="../saas/contact.html" class="hover:text-brand-800">Contact</a></p>
+                <p><a href="../hr/recruitment.html" class="hover:text-brand-800">Careers</a></p>
+                <p><a href="../auth/login.html" class="hover:text-brand-800">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-5 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-[10px] text-gray-400 font-semibold">© 2026 Donezo. All rights reserved.</p>
+            <div class="flex items-center gap-4 text-[10px] text-gray-400 font-semibold">
+                <button onclick="triggerToast('info','Terms','Opening terms of service.')" class="hover:text-brand-800">Terms</button>
+                <button onclick="triggerToast('info','Privacy','Opening privacy policy.')" class="hover:text-brand-800">Privacy</button>
+                <button onclick="triggerToast('info','Cookies','Cookie preferences saved.')" class="hover:text-brand-800">Cookies</button>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../assets/js/donezo.js"></script>
+</body>
+</html>

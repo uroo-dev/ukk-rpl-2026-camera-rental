@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Task & Project Management Dashboard (Uroo UI Architecture)</title>
+    
+    <!-- Donezo UI — Local Stylesheets (no CDN) -->
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <link rel="stylesheet" href="assets/css/donezo.css">
+
+    <!-- Lucide Icons (local) -->
+    <script src="assets/vendor/lucide.min.js"></script>
+
+
+
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+
+<!-- Dynamic Toast Anchor (Top Right) -->
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+
+<div class="flex h-screen overflow-hidden p-2 sm:p-4 gap-4">
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR NAVIGATION (Donezo + Uroo UI Style) -->
+    <!-- ========================================== -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white rounded-3xl p-5 flex flex-col justify-between shadow-card transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out my-2 md:my-0 ml-2 md:ml-0 shrink-0 border border-gray-100 overflow-y-auto">
+
+    <!-- Top Brand Logo -->
+    <div class="flex items-center justify-between pb-5 border-b border-gray-100 shrink-0">
+        <a href="./index.html" class="flex items-center space-x-3 group">
+            <div class="w-10 h-10 rounded-2xl bg-brand-800 text-white flex items-center justify-center font-bold text-xl shadow-md transition-transform group-hover:scale-105">
+                <svg class="w-6 h-6 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </div>
+            <div>
+                <span class="font-bold text-2xl tracking-tight text-gray-900 leading-none block">Donezo</span>
+                <span class="text-[9px] font-bold uppercase tracking-wider text-brand-600 block mt-0.5">Project OS</span>
+            </div>
+        </a>
+        <button id="close-sidebar-btn" class="md:hidden p-1.5 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Navigation Scroll Area -->
+    <div class="flex-1 overflow-y-auto py-5 space-y-5 pr-1">
+
+        <!-- DASHBOARD -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Main</p>
+            <nav class="space-y-1">
+                <a href="./index.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative bg-brand-50 text-brand-800">
+            <span class="w-1.5 h-6 bg-brand-800 rounded-full absolute left-0 top-1/2 -translate-y-1/2"></span>
+            <div class="flex items-center space-x-3">
+                <i data-lucide="layout-grid" class="w-4 h-4 text-brand-800"></i>
+                <span>Dashboard</span>
+            </div>
+            
+        </a>
+                <a href="./pages/admin/tasks.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="check-square" class="w-4 h-4 text-gray-500"></i>
+                <span>Tasks Backlog</span>
+            </div>
+            <span class="bg-brand-800 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12+</span>
+        </a>
+                <a href="./pages/admin/team.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="users" class="w-4 h-4 text-gray-500"></i>
+                <span>Team</span>
+            </div>
+            
+        </a>
+                <a href="./pages/admin/calendar.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                <span>Calendar</span>
+            </div>
+            
+        </a>
+            </nav>
+        </div>
+
+        <!-- ADMIN PAGES -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Admin</p>
+            <div>
+            <button data-toggle-group="admin" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-gray-500"></i>
+                    <span>Admin Pages</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="admin" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/admin/dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="layout-grid" class="w-4 h-4 text-gray-500"></i>
+                <span>Dashboard</span>
+            </div>
+            
+        </a><a href="./pages/admin/tasks.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="check-square" class="w-4 h-4 text-gray-500"></i>
+                <span>Tasks Backlog</span>
+            </div>
+            <span class="bg-brand-800 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12+</span>
+        </a><a href="./pages/admin/team.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="users" class="w-4 h-4 text-gray-500"></i>
+                <span>Team</span>
+            </div>
+            
+        </a><a href="./pages/admin/calendar.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                <span>Calendar</span>
+            </div>
+            
+        </a><a href="./pages/admin/analytics.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="trending-up" class="w-4 h-4 text-gray-500"></i>
+                <span>Analytics</span>
+            </div>
+            
+        </a><a href="./pages/admin/messages.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="message-square" class="w-4 h-4 text-gray-500"></i>
+                <span>Messages</span>
+            </div>
+            
+        </a><a href="./pages/admin/profile.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="user" class="w-4 h-4 text-gray-500"></i>
+                <span>Profile</span>
+            </div>
+            
+        </a><a href="./pages/admin/settings.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="settings" class="w-4 h-4 text-gray-500"></i>
+                <span>Settings</span>
+            </div>
+            
+        </a><a href="./pages/admin/blank.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="file" class="w-4 h-4 text-gray-500"></i>
+                <span>Blank Page</span>
+            </div>
+            
+        </a>
+            </div>
+        </div>
+        </div>
+
+        <!-- E-COMMERCE -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Commerce</p>
+            <div>
+            <button data-toggle-group="ecommerce" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="shopping-cart" class="w-4 h-4 text-gray-500"></i>
+                    <span>E-Commerce</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="ecommerce" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/ecommerce/products.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+            <span>Products</span>
+        </a><a href="./pages/ecommerce/product-detail.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="package" class="w-3.5 h-3.5"></i>
+            <span>Product Detail</span>
+        </a><a href="./pages/ecommerce/cart.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+            <span>Cart</span>
+        </a><a href="./pages/ecommerce/checkout.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+            <span>Checkout</span>
+        </a><a href="./pages/ecommerce/orders.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="package-check" class="w-3.5 h-3.5"></i>
+            <span>Orders</span>
+        </a><a href="./pages/ecommerce/invoice.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+            <span>Invoice / Nota</span>
+        </a><a href="./pages/ecommerce/ecommerce-customers.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="users" class="w-3.5 h-3.5"></i>
+            <span>Customers</span>
+        </a><a href="./pages/ecommerce/reviews.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="star" class="w-3.5 h-3.5"></i>
+            <span>Reviews</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="pos" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="calculator" class="w-4 h-4 text-gray-500"></i>
+                    <span>Point of Sale</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="pos" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/pos/cashier.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+            <span>Cashier</span>
+        </a><a href="./pages/pos/pos-tables.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="grid-3x3" class="w-3.5 h-3.5"></i>
+            <span>Tables</span>
+        </a><a href="./pages/pos/kitchen.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="chef-hat" class="w-3.5 h-3.5"></i>
+            <span>Kitchen</span>
+        </a><a href="./pages/pos/receipt.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>Receipt</span>
+        </a>
+            </div>
+        </div>
+        </div>
+
+        <!-- MANAGEMENT -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Management</p>
+            <div>
+            <button data-toggle-group="crm" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="contact" class="w-4 h-4 text-gray-500"></i>
+                    <span>CRM</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="crm" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/crm/customers.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="contact" class="w-3.5 h-3.5"></i>
+            <span>Customers</span>
+        </a><a href="./pages/crm/customer-detail.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="user-search" class="w-3.5 h-3.5"></i>
+            <span>Customer Detail</span>
+        </a><a href="./pages/crm/leads.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+            <span>Leads</span>
+        </a><a href="./pages/crm/deals.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="handshake" class="w-3.5 h-3.5"></i>
+            <span>Deals</span>
+        </a><a href="./pages/crm/activities.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+            <span>Activities</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="hr" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="users-round" class="w-4 h-4 text-gray-500"></i>
+                    <span>Human Resources</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="hr" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/hr/employees.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+            <span>Employees</span>
+        </a><a href="./pages/hr/attendance.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="fingerprint" class="w-3.5 h-3.5"></i>
+            <span>Attendance</span>
+        </a><a href="./pages/hr/payroll.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+            <span>Payroll</span>
+        </a><a href="./pages/hr/leave.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="calendar-off" class="w-3.5 h-3.5"></i>
+            <span>Leave</span>
+        </a><a href="./pages/hr/recruitment.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <span>Recruitment</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="inventory" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="boxes" class="w-4 h-4 text-gray-500"></i>
+                    <span>Inventory</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="inventory" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/inventory/stock.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
+            <span>Stock</span>
+        </a><a href="./pages/inventory/movements.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+            <span>Movements</span>
+        </a><a href="./pages/inventory/suppliers.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+            <span>Suppliers</span>
+        </a><a href="./pages/inventory/warehouses.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
+            <span>Warehouses</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="finance" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="wallet" class="w-4 h-4 text-gray-500"></i>
+                    <span>Finance</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="finance" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/finance/expense.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="arrow-down-circle" class="w-3.5 h-3.5"></i>
+            <span>Expense</span>
+        </a><a href="./pages/finance/income.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="arrow-up-circle" class="w-3.5 h-3.5"></i>
+            <span>Income</span>
+        </a><a href="./pages/finance/transactions.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+            <span>Transactions</span>
+        </a><a href="./pages/finance/tax-report.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>Tax Report</span>
+        </a>
+            </div>
+        </div>
+        </div>
+
+        <!-- OPERATIONS -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Operations</p>
+            <div>
+            <button data-toggle-group="support" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="life-buoy" class="w-4 h-4 text-gray-500"></i>
+                    <span>Support</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="support" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/support/tickets.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+            <span>Tickets</span>
+        </a><a href="./pages/support/ticket-detail.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span>Ticket Detail</span>
+        </a><a href="./pages/support/knowledge-base.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+            <span>Knowledge Base</span>
+        </a><a href="./pages/support/faq.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+            <span>FAQ</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="projects" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="folder-kanban" class="w-4 h-4 text-gray-500"></i>
+                    <span>Projects</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="projects" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/projects/kanban.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="trello" class="w-3.5 h-3.5"></i>
+            <span>Kanban</span>
+        </a><a href="./pages/projects/gantt.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>
+            <span>Gantt Chart</span>
+        </a><a href="./pages/projects/project-detail.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="folder-kanban" class="w-3.5 h-3.5"></i>
+            <span>Project Detail</span>
+        </a><a href="./pages/projects/milestones.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="flag" class="w-3.5 h-3.5"></i>
+            <span>Milestones</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="healthcare" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="heart-pulse" class="w-4 h-4 text-gray-500"></i>
+                    <span>Healthcare</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="healthcare" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/healthcare/patients.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="heart-pulse" class="w-3.5 h-3.5"></i>
+            <span>Patients</span>
+        </a><a href="./pages/healthcare/doctors.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="stethoscope" class="w-3.5 h-3.5"></i>
+            <span>Doctors</span>
+        </a><a href="./pages/healthcare/appointments.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="calendar-clock" class="w-3.5 h-3.5"></i>
+            <span>Appointments</span>
+        </a><a href="./pages/healthcare/medical-records.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="file-heart" class="w-3.5 h-3.5"></i>
+            <span>Medical Records</span>
+        </a>
+            </div>
+        </div>
+        </div>
+
+        <!-- EXTRAS -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Extras</p>
+            <div>
+            <button data-toggle-group="saas" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="globe" class="w-4 h-4 text-gray-500"></i>
+                    <span>SaaS Pages</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="saas" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/saas/pricing.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+            <span>Pricing</span>
+        </a><a href="./pages/saas/features.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+            <span>Features</span>
+        </a><a href="./pages/saas/about.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="info" class="w-3.5 h-3.5"></i>
+            <span>About</span>
+        </a><a href="./pages/saas/contact.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+            <span>Contact</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="communication" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="mail" class="w-4 h-4 text-gray-500"></i>
+                    <span>Communication</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="communication" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/communication/inbox.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="inbox" class="w-3.5 h-3.5"></i>
+            <span>Inbox</span>
+        </a><a href="./pages/communication/chat.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="messages-square" class="w-3.5 h-3.5"></i>
+            <span>Chat</span>
+        </a><a href="./pages/communication/notifications.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
+            <span>Notifications</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="files" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="folder" class="w-4 h-4 text-gray-500"></i>
+                    <span>File Manager</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="files" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/files/file-browser.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="folder" class="w-3.5 h-3.5"></i>
+            <span>File Browser</span>
+        </a><a href="./pages/files/uploader.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+            <span>Uploader</span>
+        </a>
+            </div>
+        </div>
+            <div>
+            <button data-toggle-group="auth" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="lock" class="w-4 h-4 text-gray-500"></i>
+                    <span>Auth & Errors</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="auth" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./pages/auth/login.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+            <span>Login</span>
+        </a><a href="./pages/auth/register.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <span>Register</span>
+        </a><a href="./pages/auth/forgot-password.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+            <span>Forgot Password</span>
+        </a><a href="./pages/auth/lock-screen.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>Lock Screen</span>
+        </a><a href="./pages/error/404.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="frown" class="w-3.5 h-3.5"></i>
+            <span>404 Error</span>
+        </a><a href="./pages/error/500.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="server-crash" class="w-3.5 h-3.5"></i>
+            <span>500 Error</span>
+        </a>
+            </div>
+        </div>
+            <nav class="space-y-1 mt-1">
+                <a href="./pages/landing/index.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+            
+            <div class="flex items-center space-x-3">
+                <i data-lucide="rocket" class="w-4 h-4 text-gray-500"></i>
+                <span>Landing Page</span>
+            </div>
+            
+        </a>
+            </nav>
+        </div>
+
+        <!-- UI COMPONENTS -->
+        <div>
+            <div class="flex items-center justify-between px-3 mb-2.5">
+                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">UI Toolkit</p>
+                <span class="bg-brand-100 text-brand-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded">BLADE</span>
+            </div>
+            <div>
+            <button data-toggle-group="components" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="box" class="w-4 h-4 text-gray-500"></i>
+                    <span>UI Components</span>
+                </div>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+            </button>
+            <div data-group-content="components" class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                <a href="./components/buttons.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5"></i>
+            <span>Buttons</span>
+        </a><a href="./components/forms.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            <span>Forms & Inputs</span>
+        </a><a href="./components/alerts.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+            <span>Alerts & Toasts</span>
+        </a><a href="./components/modals.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+            <span>Modals & Dialogs</span>
+        </a><a href="./components/cards.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+            <span>Cards & Widgets</span>
+        </a><a href="./components/tables.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="table" class="w-3.5 h-3.5"></i>
+            <span>Tables & Lists</span>
+        </a><a href="./components/badges.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+            <span>Badges & Pills</span>
+        </a><a href="./components/datetime.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+            <span>Date & Time</span>
+        </a><a href="./components/charts.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
+            <span>Charts</span>
+        </a><a href="./components/tabs.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="panel-top" class="w-3.5 h-3.5"></i>
+            <span>Tabs</span>
+        </a><a href="./components/dropdowns.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+            <span>Dropdowns</span>
+        </a><a href="./components/pagination.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="chevrons-right" class="w-3.5 h-3.5"></i>
+            <span>Pagination</span>
+        </a><a href="./components/progress.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="loader" class="w-3.5 h-3.5"></i>
+            <span>Progress</span>
+        </a><a href="./components/avatars.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="user-circle" class="w-3.5 h-3.5"></i>
+            <span>Avatars</span>
+        </a><a href="./components/timeline.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="git-commit" class="w-3.5 h-3.5"></i>
+            <span>Timeline</span>
+        </a><a href="./components/tooltips.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span>Tooltips</span>
+        </a><a href="./components/skeleton.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="loader-2" class="w-3.5 h-3.5"></i>
+            <span>Skeleton</span>
+        </a><a href="./components/icons.html" class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+            <i data-lucide="star" class="w-3.5 h-3.5"></i>
+            <span>Icon Gallery</span>
+        </a>
+            </div>
+        </div>
+        </div>
+
+        <!-- GENERAL -->
+        <div>
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">General</p>
+            <nav class="space-y-1">
+                <button onclick="triggerToast('info', 'Settings', 'Settings dialog ready.')" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-gray-600 hover:text-gray-900 hover:bg-gray-50 text-sm font-semibold transition-all text-left">
+                    <i data-lucide="settings" class="w-4 h-4 text-gray-500"></i><span>Settings</span>
+                </button>
+                <button onclick="triggerToast('info', 'Help Center', 'Documentation & support guide opened.')" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-gray-600 hover:text-gray-900 hover:bg-gray-50 text-sm font-semibold transition-all text-left">
+                    <i data-lucide="help-circle" class="w-4 h-4 text-gray-500"></i><span>Help & Docs</span>
+                </button>
+                <a href="./pages/auth/login.html" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-gray-500 hover:text-rose-600 hover:bg-rose-50 text-sm font-semibold transition-all text-left">
+                    <i data-lucide="log-out" class="w-4 h-4"></i><span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Bottom Mobile App Promo Card -->
+    <div class="relative overflow-hidden bg-brand-dark rounded-2xl p-4 text-white shadow-lg mt-auto shrink-0">
+        <div class="absolute -right-4 -bottom-4 opacity-20 pointer-events-none">
+            <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                <circle cx="50" cy="50" r="40" stroke-width="4"></circle>
+                <circle cx="50" cy="50" r="25" stroke-width="3"></circle>
+            </svg>
+        </div>
+        <div class="relative z-10">
+            <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-2.5">
+                <i data-lucide="smartphone" class="w-4 h-4 text-brand-300"></i>
+            </div>
+            <h4 class="font-bold text-xs text-white leading-tight">Donezo Mobile App</h4>
+            <p class="text-[10px] text-gray-300 mt-0.5 mb-2.5">Available on iOS & Android</p>
+            <button onclick="triggerToast('info', 'Download', 'Redirecting to App Store...')" class="w-full py-1.5 bg-brand-800 hover:bg-brand-700 text-white font-semibold text-xs rounded-xl transition shadow border border-brand-600/40">
+                Download
+            </button>
+        </div>
+    </div>
+    
+    </aside>
+
+    <!-- Overlay backdrop for mobile sidebar -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/30 backdrop-blur-xs z-30 hidden md:hidden"></div>
+
+    <!-- ========================================== -->
+    <!-- MAIN CONTENT VIEWPORT                       -->
+    <!-- ========================================== -->
+    <div class="flex-1 flex flex-col h-full overflow-y-auto pr-1">
+        
+        <!-- TOP HEADER -->
+        <header class="flex items-center justify-between py-3 mb-4 gap-4 sticky top-0 bg-[#f3f5f4]/90 backdrop-blur-md z-20">
+            
+            <!-- Mobile Toggle & Search Bar -->
+            <div class="flex items-center gap-3 flex-1 max-w-xl">
+                <button id="open-sidebar-btn" class="md:hidden p-2 rounded-2xl bg-white text-gray-600 shadow-sm border border-gray-100 hover:text-brand-800">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+
+                <div class="relative flex-1">
+                    <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input id="global-search-input" type="text" placeholder="Search task, project, or member (Press ⌘F)" class="w-full pl-10 pr-12 py-2.5 bg-white border border-gray-100 rounded-full text-xs font-medium text-gray-800 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400 transition-all">
+                    <div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-0.5 text-[10px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-md border border-gray-200">
+                        <span>⌘</span><span>F</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Header Actions & User Profile -->
+            <div class="flex items-center space-x-3 shrink-0">
+                <!-- Jump to Component Playground -->
+                <a href="#playground" class="hidden sm:flex items-center space-x-1.5 px-3 py-2 bg-white border border-gray-100 rounded-full text-xs font-semibold text-gray-700 hover:text-brand-800 hover:border-brand-200 shadow-sm transition-all">
+                    <i data-lucide="code-2" class="w-3.5 h-3.5 text-brand-600"></i>
+                    <span>Playground</span>
+                </a>
+
+                <!-- Message Icon -->
+                <button onclick="triggerToast('info', 'Messages', 'No unread messages in inbox.')" class="w-10 h-10 rounded-full bg-white border border-gray-100 text-gray-600 hover:text-brand-800 flex items-center justify-center transition-colors shadow-sm relative">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                </button>
+
+                <!-- Notification Icon -->
+                <button onclick="triggerToast('warning', 'Notifications', '2 tasks are due today.')" class="w-10 h-10 rounded-full bg-white border border-gray-100 text-gray-600 hover:text-brand-800 flex items-center justify-center transition-colors shadow-sm relative">
+                    <i data-lucide="bell" class="w-4 h-4"></i>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 absolute top-2.5 right-2.5 border border-white"></span>
+                </button>
+
+                <!-- User Profile Dropdown Button -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-3 pl-2 py-1 pr-1.5 rounded-full hover:bg-white/80 transition-all border border-transparent hover:border-gray-100">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150" alt="Totok Michael" class="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm">
+                        <div class="hidden sm:block text-left">
+                            <h4 class="font-bold text-xs text-gray-900 leading-tight">Totok Michael</h4>
+                            <p class="text-[11px] text-gray-400 leading-tight">tmichael20@mail.com</p>
+                        </div>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-400 hidden sm:block"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD BODY CONTENT -->
+        <main class="space-y-6 pb-12">
+            
+            <!-- SECTION 1: HERO TITLE & ACTIONS -->
+            <section id="dashboard" class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h1 class="font-bold text-2xl sm:text-3xl text-gray-900 tracking-tight">Dashboard</h1>
+                    <p class="text-xs text-gray-500 mt-1">Plan, prioritize, and accomplish your tasks with ease.</p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="openModal('modal-add-project')" class="flex items-center space-x-2 bg-brand-800 hover:bg-brand-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-md transition-all active:scale-95 cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Add Project</span>
+                    </button>
+                    <button onclick="triggerToast('info', 'Import Data', 'CSV / JSON Importer ready to upload.')" class="flex items-center space-x-2 bg-white hover:bg-gray-50 text-brand-800 border border-brand-800 text-xs font-semibold px-4 py-2.5 rounded-full shadow-sm transition-all active:scale-95 cursor-pointer">
+                        <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i>
+                        <span>Import Data</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: TOP STATS CARDS GRID -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Card 1: Total Projects (Dark Green Highlight) -->
+                <div class="bg-brand-800 text-white rounded-3xl p-5 shadow-card relative overflow-hidden flex flex-col justify-between group hover:shadow-card-hover transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium text-brand-200">Total Projects</span>
+                        <button onclick="triggerToast('info', 'Analytics', 'Navigating to Total Projects report...')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="my-3">
+                        <span class="font-bold text-4xl tracking-tight">24</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5 text-[11px] font-semibold text-brand-200">
+                        <span class="bg-brand-700 text-brand-200 p-1 rounded-md border border-brand-600/50">
+                            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                        </span>
+                        <span class="text-white font-bold">5</span>
+                        <span>Increased from last month</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Ended Projects -->
+                <div class="bg-white text-gray-900 rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between hover:shadow-card-hover transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium text-gray-500">Ended Projects</span>
+                        <button onclick="triggerToast('info', 'Filter', 'Showing completed project archives...')" class="w-8 h-8 rounded-full bg-gray-50 hover:bg-gray-100 border border-gray-100 flex items-center justify-center text-gray-600 transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="my-3">
+                        <span class="font-bold text-4xl tracking-tight text-gray-900">10</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5 text-[11px] font-medium text-gray-500">
+                        <span class="bg-gray-100 text-gray-700 p-1 rounded-md border border-gray-200">
+                            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                        </span>
+                        <span class="text-gray-900 font-bold">6</span>
+                        <span>Increased from last month</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Running Projects -->
+                <div class="bg-white text-gray-900 rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between hover:shadow-card-hover transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium text-gray-500">Running Projects</span>
+                        <button onclick="triggerToast('info', 'Filter', 'Showing active running pipelines...')" class="w-8 h-8 rounded-full bg-gray-50 hover:bg-gray-100 border border-gray-100 flex items-center justify-center text-gray-600 transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="my-3">
+                        <span class="font-bold text-4xl tracking-tight text-gray-900">12</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5 text-[11px] font-medium text-gray-500">
+                        <span class="bg-gray-100 text-gray-700 p-1 rounded-md border border-gray-200">
+                            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                        </span>
+                        <span class="text-gray-900 font-bold">2</span>
+                        <span>Increased from last month</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Pending Project -->
+                <div class="bg-white text-gray-900 rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between hover:shadow-card-hover transition-all">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-medium text-gray-500">Pending Project</span>
+                        <button onclick="triggerToast('warning', 'Review Needed', '2 proposals waiting for client sign-off.')" class="w-8 h-8 rounded-full bg-gray-50 hover:bg-gray-100 border border-gray-100 flex items-center justify-center text-gray-600 transition-colors">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="my-3">
+                        <span class="font-bold text-4xl tracking-tight text-gray-900">2</span>
+                    </div>
+                    <div class="text-[11px] font-medium text-amber-600 flex items-center space-x-1">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 inline-block animate-pulse"></span>
+                        <span>On Discussion</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION 3: MIDDLE ROW (Analytics Chart, Meeting Reminders, Project List) -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                
+                <!-- Project Analytics Pill Bar Chart (Col 5) -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <h3 class="font-bold text-sm text-gray-900">Project Analytics</h3>
+                            <p class="text-[11px] text-gray-400 mt-0.5">Weekly velocity & sprint delivery rate</p>
+                        </div>
+                        <div class="flex items-center space-x-1 bg-gray-100 p-1 rounded-xl text-[10px] font-semibold text-gray-600">
+                            <button class="px-2 py-0.5 bg-white rounded-lg shadow-xs text-brand-800">Weekly</button>
+                            <button class="px-2 py-0.5 hover:text-gray-900">Monthly</button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Pill Bar Chart with Patterned Fills -->
+                    <div class="flex items-end justify-between h-44 pt-6 px-2 gap-2">
+                        <!-- Sun -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end group cursor-pointer" onclick="triggerToast('info', 'Sunday', '65% productivity benchmark achieved.')">
+                            <div class="w-full max-w-[28px] h-[65%] rounded-full pattern-striped mb-2 transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-gray-400">S</span>
+                        </div>
+                        <!-- Mon -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end group cursor-pointer" onclick="triggerToast('info', 'Monday', '90% velocity benchmark reached.')">
+                            <div class="w-full max-w-[28px] h-[90%] rounded-full bg-brand-700 mb-2 transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-gray-400">M</span>
+                        </div>
+                        <!-- Tue (Active Highlight with 74% Tooltip Pill) -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end relative group cursor-pointer" onclick="triggerToast('success', 'Tuesday Target', '74% sprint completion (High Efficiency).')">
+                            <div class="absolute -top-5 bg-gray-100 border border-gray-200 text-gray-700 text-[9px] font-bold px-1.5 py-0.5 rounded-md shadow-xs">
+                                74%
+                            </div>
+                            <div class="w-full max-w-[28px] h-[75%] rounded-full bg-brand-400 mb-2 shadow-sm transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-brand-800 font-bold">T</span>
+                        </div>
+                        <!-- Wed (Peak 100%) -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end group cursor-pointer" onclick="triggerToast('success', 'Wednesday Peak', '100% capacity deployed.')">
+                            <div class="w-full max-w-[28px] h-[100%] rounded-full bg-brand-900 mb-2 transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-gray-400">W</span>
+                        </div>
+                        <!-- Thu -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end group cursor-pointer" onclick="triggerToast('info', 'Thursday', '70% task clearance rate.')">
+                            <div class="w-full max-w-[28px] h-[70%] rounded-full pattern-striped-green mb-2 transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-gray-400">T</span>
+                        </div>
+                        <!-- Fri -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end group cursor-pointer" onclick="triggerToast('info', 'Friday', '80% release deployment accomplished.')">
+                            <div class="w-full max-w-[28px] h-[80%] rounded-full pattern-striped mb-2 transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-gray-400">F</span>
+                        </div>
+                        <!-- Sat -->
+                        <div class="flex flex-col items-center flex-1 h-full justify-end group cursor-pointer" onclick="triggerToast('info', 'Saturday', '60% light maintenance run.')">
+                            <div class="w-full max-w-[28px] h-[60%] rounded-full pattern-striped mb-2 transition-transform group-hover:scale-y-105"></div>
+                            <span class="text-[11px] font-semibold text-gray-400">S</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reminders Card (Col 3) -->
+                <div class="lg:col-span-3 bg-white rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-sm text-gray-900">Reminders</h3>
+                            <span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span>
+                        </div>
+                        
+                        <div class="p-3.5 rounded-2xl bg-brand-50/60 border border-brand-100 space-y-1.5">
+                            <div class="flex items-center space-x-1.5 text-brand-800 text-[11px] font-bold">
+                                <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                                <span>Upcoming Call</span>
+                            </div>
+                            <h4 class="font-bold text-sm text-gray-900 leading-snug">Meeting with Arc Company</h4>
+                            <p class="text-xs text-gray-500 font-medium flex items-center space-x-1">
+                                <i data-lucide="clock" class="w-3 h-3 text-gray-400"></i>
+                                <span>02.00 pm - 04.00 pm</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-5">
+                        <button onclick="triggerToast('success', 'Starting Meeting', 'Joining encrypted video room via Arc Bridge...')" class="w-full py-3 bg-brand-800 hover:bg-brand-900 text-white font-semibold text-xs rounded-2xl flex items-center justify-center space-x-2 transition-all shadow-md active:scale-95 cursor-pointer">
+                            <i data-lucide="video" class="w-4 h-4"></i>
+                            <span>Start Meeting</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project List Card (Col 4) -->
+                <div class="lg:col-span-4 bg-white rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-sm text-gray-900">Project Backlog</h3>
+                            <button onclick="openModal('modal-add-project')" class="flex items-center space-x-1 text-xs font-semibold text-gray-600 hover:text-brand-800 border border-gray-200 hover:border-brand-300 rounded-full px-2.5 py-1 transition-colors">
+                                <i data-lucide="plus" class="w-3 h-3"></i>
+                                <span>New</span>
+                            </button>
+                        </div>
+
+                        <!-- Project Items List -->
+                        <div class="space-y-3">
+                            
+                            <div class="flex items-center space-x-3 p-1.5 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer" onclick="triggerToast('info', 'Develop API Endpoints', 'Backend Sprint #4: 85% tasks merged.')">
+                                <div class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="code" class="w-4 h-4"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-xs text-gray-900 truncate">Develop API Endpoints</h4>
+                                    <p class="text-[10px] text-gray-400">Due date: Nov 26, 2024</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">Dev</span>
+                            </div>
+
+                            <div class="flex items-center space-x-3 p-1.5 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer" onclick="triggerToast('info', 'Onboarding Flow', 'UX Figma spec handed over to Front-End.')">
+                                <div class="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="git-branch" class="w-4 h-4"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-xs text-gray-900 truncate">Onboarding Flow</h4>
+                                    <p class="text-[10px] text-gray-400">Due date: Nov 28, 2024</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full">UX</span>
+                            </div>
+
+                            <div class="flex items-center space-x-3 p-1.5 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer" onclick="triggerToast('info', 'Build Dashboard', 'Component library & interactive playground connected.')">
+                                <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="layout" class="w-4 h-4"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-xs text-gray-900 truncate">Build Dashboard</h4>
+                                    <p class="text-[10px] text-gray-400">Due date: Nov 30, 2024</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">UI</span>
+                            </div>
+
+                            <div class="flex items-center space-x-3 p-1.5 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer" onclick="triggerToast('info', 'Optimize Page Load', 'Lighthouse score improved to 98/100.')">
+                                <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="zap" class="w-4 h-4"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-xs text-gray-900 truncate">Optimize Page Load</h4>
+                                    <p class="text-[10px] text-gray-400">Due date: Dec 5, 2024</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Perf</span>
+                            </div>
+
+                            <div class="flex items-center space-x-3 p-1.5 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer" onclick="triggerToast('info', 'Cross-Browser Testing', 'Automated Playwright tests running.')">
+                                <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="globe" class="w-4 h-4"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-xs text-gray-900 truncate">Cross-Browser Testing</h4>
+                                    <p class="text-[10px] text-gray-400">Due date: Dec 6, 2024</p>
+                                </div>
+                                <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">QA</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION 4: BOTTOM ROW (Team Collaboration, Semi-Donut Gauge, Live Time Tracker) -->
+            <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                
+                <!-- Team Collaboration (Col 5) -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-900">Team Collaboration</h3>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Live work stream & assignee status</p>
+                            </div>
+                            <button onclick="triggerToast('info', 'Add Member', 'Invitation modal opened.')" class="flex items-center space-x-1 text-xs font-semibold text-gray-600 hover:text-brand-800 border border-gray-200 hover:border-brand-300 rounded-full px-2.5 py-1 transition-colors">
+                                <i data-lucide="user-plus" class="w-3 h-3"></i>
+                                <span>Add Member</span>
+                            </button>
+                        </div>
+
+                        <!-- Team Members List -->
+                        <div class="space-y-3.5">
+                            
+                            <!-- Member 1 -->
+                            <div class="flex items-center justify-between p-1 hover:bg-gray-50 rounded-2xl transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=120" alt="Alexandra Deff" class="w-9 h-9 rounded-full object-cover">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-gray-900">Alexandra Deff</h4>
+                                        <p class="text-[10px] text-gray-400">Working on <span class="font-semibold text-gray-600">Github Project Repository</span></p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">Completed</span>
+                            </div>
+
+                            <!-- Member 2 -->
+                            <div class="flex items-center justify-between p-1 hover:bg-gray-50 rounded-2xl transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120" alt="Edwin Adenike" class="w-9 h-9 rounded-full object-cover">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-gray-900">Edwin Adenike</h4>
+                                        <p class="text-[10px] text-gray-400">Working on <span class="font-semibold text-gray-600">Integrate User Authentication</span></p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">In Progress</span>
+                            </div>
+
+                            <!-- Member 3 -->
+                            <div class="flex items-center justify-between p-1 hover:bg-gray-50 rounded-2xl transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120" alt="Isaac Oluwatemilorun" class="w-9 h-9 rounded-full object-cover">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-gray-900">Isaac Oluwatemilorun</h4>
+                                        <p class="text-[10px] text-gray-400">Working on <span class="font-semibold text-gray-600">Develop Search & Filter Function</span></p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-semibold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">Pending</span>
+                            </div>
+
+                            <!-- Member 4 -->
+                            <div class="flex items-center justify-between p-1 hover:bg-gray-50 rounded-2xl transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=120" alt="David Oshodi" class="w-9 h-9 rounded-full object-cover">
+                                    <div>
+                                        <h4 class="font-bold text-xs text-gray-900">David Oshodi</h4>
+                                        <p class="text-[10px] text-gray-400">Working on <span class="font-semibold text-gray-600">Responsive Layout for Homepage</span></p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">In Progress</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Progress Semi-Donut Gauge (Col 4) -->
+                <div class="lg:col-span-4 bg-white rounded-3xl p-5 shadow-card border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-sm text-gray-900">Project Progress</h3>
+                            <span class="text-[11px] font-bold text-brand-800 bg-brand-50 px-2 py-0.5 rounded-full">Sprint #4</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400">Weighted milestone completion</p>
+                    </div>
+
+                    <!-- Gauge Graphic Container -->
+                    <div class="relative flex items-center justify-center my-3">
+                        <!-- Semi-Circle Arc SVG -->
+                        <svg class="w-52 h-32" viewBox="0 0 200 110">
+                            <!-- Background Track (Striped Pending) -->
+                            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e5e7eb" stroke-width="24" stroke-dasharray="6,6" />
+                            <!-- Completed Green Arc -->
+                            <path d="M 20 100 A 80 80 0 0 1 110 22" fill="none" stroke="#14422b" stroke-width="24" stroke-linecap="round" />
+                            <!-- In-Progress Lighter Green Arc -->
+                            <path d="M 110 22 A 80 80 0 0 1 155 45" fill="none" stroke="#41ab75" stroke-width="24" />
+                        </svg>
+
+                        <!-- Centered Stat Text -->
+                        <div class="absolute bottom-2 text-center">
+                            <span class="font-extrabold text-3xl text-gray-900 tracking-tight">41%</span>
+                            <p class="text-[11px] text-gray-400 font-medium">Project Ended</p>
+                        </div>
+                    </div>
+
+                    <!-- Chart Legend -->
+                    <div class="flex items-center justify-center space-x-4 pt-2 text-[11px] font-medium text-gray-500 border-t border-gray-100">
+                        <div class="flex items-center space-x-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-brand-800"></span>
+                            <span>Completed</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-brand-400"></span>
+                            <span>In Progress</span>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+                            <span>Pending</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Tracker Card (Col 3 - Dark Textured Green) -->
+                <div class="lg:col-span-3 bg-brand-dark rounded-3xl p-5 shadow-card relative overflow-hidden flex flex-col justify-between text-white">
+                    
+                    <!-- Decorative Background Wave Graphics -->
+                    <div class="absolute inset-0 opacity-20 pointer-events-none">
+                        <svg class="w-full h-full" viewBox="0 0 200 200" fill="none" stroke="#41ab75">
+                            <path d="M0 100 Q 50 20, 100 100 T 200 100" stroke-width="4" fill="none"></path>
+                            <path d="M0 130 Q 50 50, 100 130 T 200 130" stroke-width="3" fill="none"></path>
+                            <path d="M0 160 Q 50 80, 100 160 T 200 160" stroke-width="2" fill="none"></path>
+                        </svg>
+                    </div>
+
+                    <div class="relative z-10 flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-white">Time Tracker</h3>
+                        <span id="timer-status-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Active</span>
+                    </div>
+
+                    <!-- Digital Live Clock Display -->
+                    <div class="relative z-10 my-4 text-center">
+                        <span id="timer-display" class="font-bold text-4xl tracking-wider text-white font-mono drop-shadow">01:24:08</span>
+                        <p class="text-[10px] text-gray-300 mt-1">Current Task: User Authentication System</p>
+                    </div>
+
+                    <!-- Timer Action Buttons -->
+                    <div class="relative z-10 flex items-center justify-center space-x-3 pt-2">
+                        <button id="pause-btn" class="w-10 h-10 rounded-full bg-white text-brand-800 flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-md cursor-pointer">
+                            <i id="pause-icon" data-lucide="pause" class="w-5 h-5 fill-current"></i>
+                        </button>
+                        <button id="stop-btn" class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-md cursor-pointer">
+                            <i data-lucide="square" class="w-4 h-4 fill-current"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ======================================================== -->
+            <!-- SECTION 5: UROO UI COMPONENT PLAYGROUND & CODE GENERATOR -->
+            <!-- ======================================================== -->
+            <section id="playground" class="bg-white rounded-3xl p-6 shadow-card border border-gray-100 space-y-6">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-5 border-b border-gray-100 gap-4">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="p-1.5 bg-brand-50 text-brand-800 rounded-xl">
+                                <i data-lucide="terminal" class="w-5 h-5"></i>
+                            </span>
+                            <h2 class="font-extrabold text-xl text-gray-900 tracking-tight">Donezo UI Component Playground</h2>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Interactive component catalog with live Preview & 1-Click Copy Code snippet generator.</p>
+                    </div>
+
+                    <!-- Component Category Filter Buttons -->
+                    <div class="flex flex-wrap items-center gap-1.5 p-1 bg-gray-100 rounded-2xl">
+                        <button onclick="filterComponentTab('all')" class="cat-pill active px-3 py-1.5 rounded-xl text-xs font-semibold bg-white text-brand-800 shadow-xs transition-all">All</button>
+                        <button onclick="filterComponentTab('modals')" class="cat-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-600 hover:text-gray-900 transition-all">Modals</button>
+                        <button onclick="filterComponentTab('forms')" class="cat-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-600 hover:text-gray-900 transition-all">Forms</button>
+                        <button onclick="filterComponentTab('alerts')" class="cat-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-600 hover:text-gray-900 transition-all">Alerts & Toast</button>
+                        <button onclick="filterComponentTab('cards')" class="cat-pill px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-600 hover:text-gray-900 transition-all">Cards & Badges</button>
+                    </div>
+                </div>
+
+                <!-- PLAYGROUND ITEMS GRID -->
+                <div class="space-y-8">
+                    
+                    <!-- COMPONENT 1: MODAL POPUPS -->
+                    <div class="comp-card border border-gray-100 rounded-2xl p-5 bg-[#fafbfb] space-y-4" data-category="modals">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-900 flex items-center gap-2">
+                                    <i data-lucide="layers" class="w-4 h-4 text-brand-700"></i>
+                                    <span>Interactive Modals & Dialogs</span>
+                                </h3>
+                                <p class="text-[11px] text-gray-400">Modal popups for creating projects and confirming destructive actions.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleView('modal-comp', 'preview')" id="modal-comp-btn-prev" class="view-toggle-btn active text-xs font-semibold px-3 py-1 rounded-lg bg-brand-800 text-white">Preview</button>
+                                <button onclick="toggleView('modal-comp', 'code')" id="modal-comp-btn-code" class="view-toggle-btn text-xs font-semibold px-3 py-1 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">Code</button>
+                                <button onclick="copySnippet('modal-code-raw')" class="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 bg-white border border-gray-200 rounded-lg hover:border-brand-500 text-gray-700 hover:text-brand-800 transition">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Copy HTML</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preview Area -->
+                        <div id="modal-comp-preview" class="p-6 bg-white rounded-xl border border-gray-100 flex flex-wrap gap-3">
+                            <button onclick="openModal('modal-add-project')" class="px-4 py-2 bg-brand-800 hover:bg-brand-900 text-white font-semibold text-xs rounded-xl shadow transition">
+                                Launch "Add Project" Modal
+                            </button>
+                            <button onclick="openModal('modal-delete-confirm')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs rounded-xl shadow transition">
+                                Launch "Delete Confirm" Dialog
+                            </button>
+                        </div>
+
+                        <!-- Code Area -->
+                        <div id="modal-comp-code" class="hidden relative">
+                            <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl overflow-x-auto text-xs"><code id="modal-code-raw">&lt;!-- Donezo Modal Trigger & Backdrop --&gt;
+&lt;div id="modal-add-project" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs hidden"&gt;
+  &lt;div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 animate-in fade-in zoom-in-95"&gt;
+    &lt;div class="flex items-center justify-between pb-4 border-b border-gray-100"&gt;
+      &lt;h3 class="font-bold text-base text-gray-900"&gt;Add New Project&lt;/h3&gt;
+      &lt;button onclick="closeModal('modal-add-project')" class="text-gray-400 hover:text-gray-600"&gt;&times;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="py-4 space-y-3"&gt;
+      &lt;label class="block text-xs font-semibold text-gray-700"&gt;Project Title&lt;/label&gt;
+      &lt;input type="text" placeholder="e.g. Design System V2" class="w-full px-3 py-2 border rounded-xl text-xs"&gt;
+    &lt;/div&gt;
+    &lt;div class="flex justify-end gap-2 pt-3 border-t"&gt;
+      &lt;button onclick="closeModal('modal-add-project')" class="px-4 py-2 text-xs font-semibold text-gray-600 bg-gray-100 rounded-xl"&gt;Cancel&lt;/button&gt;
+      &lt;button class="px-4 py-2 text-xs font-semibold text-white bg-brand-800 rounded-xl"&gt;Save Project&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- COMPONENT 2: FORM CONTROLS & INPUTS -->
+                    <div class="comp-card border border-gray-100 rounded-2xl p-5 bg-[#fafbfb] space-y-4" data-category="forms">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-900 flex items-center gap-2">
+                                    <i data-lucide="edit-3" class="w-4 h-4 text-brand-700"></i>
+                                    <span>Form Controls, Selects & Toggles</span>
+                                </h3>
+                                <p class="text-[11px] text-gray-400">Pill inputs, selects, segmented radios, and smooth switches.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleView('form-comp', 'preview')" id="form-comp-btn-prev" class="view-toggle-btn active text-xs font-semibold px-3 py-1 rounded-lg bg-brand-800 text-white">Preview</button>
+                                <button onclick="toggleView('form-comp', 'code')" id="form-comp-btn-code" class="view-toggle-btn text-xs font-semibold px-3 py-1 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">Code</button>
+                                <button onclick="copySnippet('form-code-raw')" class="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 bg-white border border-gray-200 rounded-lg hover:border-brand-500 text-gray-700 hover:text-brand-800 transition">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Copy HTML</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preview Area -->
+                        <div id="form-comp-preview" class="p-6 bg-white rounded-xl border border-gray-100 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Text Input -->
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-semibold text-gray-700">Project Name</label>
+                                <input type="text" placeholder="Enter title..." class="w-full px-3.5 py-2.5 bg-gray-50/70 border border-gray-200 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400">
+                            </div>
+
+                            <!-- Select dropdown -->
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-semibold text-gray-700">Department</label>
+                                <select class="w-full px-3.5 py-2.5 bg-gray-50/70 border border-gray-200 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400">
+                                    <option>Front-End Engineering</option>
+                                    <option>Product Design & UI/UX</option>
+                                    <option>Quality Assurance</option>
+                                </select>
+                            </div>
+
+                            <!-- Toggle Switch -->
+                            <div class="space-y-1.5">
+                                <label class="block text-xs font-semibold text-gray-700">Priority Notification</label>
+                                <label class="inline-flex items-center cursor-pointer mt-1">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-800"></div>
+                                    <span class="ml-3 text-xs font-medium text-gray-700">Enable Alert</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Code Area -->
+                        <div id="form-comp-code" class="hidden relative">
+                            <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl overflow-x-auto text-xs"><code id="form-code-raw">&lt;!-- Rounded Form Controls --&gt;
+&lt;div class="space-y-1.5"&gt;
+  &lt;label class="block text-xs font-semibold text-gray-700"&gt;Project Name&lt;/label&gt;
+  &lt;input type="text" placeholder="Enter title..." class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400"&gt;
+&lt;/div&gt;
+
+&lt;!-- Toggle Switch --&gt;
+&lt;label class="inline-flex items-center cursor-pointer"&gt;
+  &lt;input type="checkbox" checked class="sr-only peer"&gt;
+  &lt;div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-800"&gt;&lt;/div&gt;
+  &lt;span class="ml-3 text-xs font-medium text-gray-700"&gt;Enable Alert&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- COMPONENT 3: ALERTS & DYNAMIC TOAST TRIGGERS -->
+                    <div class="comp-card border border-gray-100 rounded-2xl p-5 bg-[#fafbfb] space-y-4" data-category="alerts">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-900 flex items-center gap-2">
+                                    <i data-lucide="bell" class="w-4 h-4 text-brand-700"></i>
+                                    <span>Multi-Position Alerts & Toast Triggers</span>
+                                </h3>
+                                <p class="text-[11px] text-gray-400">Trigger animated notifications with auto-dismiss progress timers across screen positions.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleView('alert-comp', 'preview')" id="alert-comp-btn-prev" class="view-toggle-btn active text-xs font-semibold px-3 py-1 rounded-lg bg-brand-800 text-white">Preview</button>
+                                <button onclick="toggleView('alert-comp', 'code')" id="alert-comp-btn-code" class="view-toggle-btn text-xs font-semibold px-3 py-1 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">Code</button>
+                                <button onclick="copySnippet('alert-code-raw')" class="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 bg-white border border-gray-200 rounded-lg hover:border-brand-500 text-gray-700 hover:text-brand-800 transition">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Copy HTML</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preview Area -->
+                        <div id="alert-comp-preview" class="p-6 bg-white rounded-xl border border-gray-100 space-y-4">
+                            <!-- In-line Static Alerts -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="p-3.5 rounded-2xl bg-brand-50 border border-brand-200 text-brand-900 flex items-start gap-2.5 text-xs">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-700 shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-bold">Project Synced Successfully</p>
+                                        <p class="text-brand-800/80 mt-0.5 text-[11px]">All 12 pending tasks were pushed to the cloud repository.</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-2.5 text-xs">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-bold">Milestone Due Date Approaching</p>
+                                        <p class="text-amber-800/80 mt-0.5 text-[11px]">Develop API Endpoints requires QA review in 24 hours.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Toast Trigger Buttons -->
+                            <div class="pt-2">
+                                <p class="text-xs font-bold text-gray-700 mb-2">Test Live Toast Triggers (Click below):</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="triggerToast('success', 'Task Completed', 'Onboarding Flow was marked as 100% complete.')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-xs transition">
+                                        Success Toast
+                                    </button>
+                                    <button onclick="triggerToast('warning', 'Low Storage Alert', 'Cloud workspace is at 88% capacity.')" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs rounded-xl shadow-xs transition">
+                                        Warning Toast
+                                    </button>
+                                    <button onclick="triggerToast('error', 'Sync Failed', 'Unable to reach remote branch origin.')" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs rounded-xl shadow-xs transition">
+                                        Danger Toast
+                                    </button>
+                                    <button onclick="triggerToast('info', 'New Update Available', 'Version 2.4.0 is ready to install.')" class="px-3.5 py-2 bg-brand-800 hover:bg-brand-900 text-white font-semibold text-xs rounded-xl shadow-xs transition">
+                                        Brand Info Toast
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Code Area -->
+                        <div id="alert-comp-code" class="hidden relative">
+                            <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl overflow-x-auto text-xs"><code id="alert-code-raw">&lt;!-- Donezo Static Alert --&gt;
+&lt;div class="p-3.5 rounded-2xl bg-brand-50 border border-brand-200 text-brand-900 flex items-start gap-2.5 text-xs"&gt;
+  &lt;i data-lucide="check-circle-2" class="w-4 h-4 text-brand-700 shrink-0"&gt;&lt;/i&gt;
+  &lt;div&gt;
+    &lt;p class="font-bold"&gt;Project Synced Successfully&lt;/p&gt;
+    &lt;p class="text-brand-800/80 mt-0.5 text-[11px]"&gt;All 12 pending tasks were pushed to the cloud repository.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Dynamic Toast Javascript Invocation --&gt;
+triggerToast('success', 'Task Completed', 'Onboarding flow marked complete.', 3500);</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- COMPONENT 4: PAGINATION & CARDS -->
+                    <div class="comp-card border border-gray-100 rounded-2xl p-5 bg-[#fafbfb] space-y-4" data-category="cards">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-900 flex items-center gap-2">
+                                    <i data-lucide="sliders" class="w-4 h-4 text-brand-700"></i>
+                                    <span>Pagination & Pill Badges</span>
+                                </h3>
+                                <p class="text-[11px] text-gray-400">Navigation controls and status indicators.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleView('page-comp', 'preview')" id="page-comp-btn-prev" class="view-toggle-btn active text-xs font-semibold px-3 py-1 rounded-lg bg-brand-800 text-white">Preview</button>
+                                <button onclick="toggleView('page-comp', 'code')" id="page-comp-btn-code" class="view-toggle-btn text-xs font-semibold px-3 py-1 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300">Code</button>
+                                <button onclick="copySnippet('page-code-raw')" class="flex items-center gap-1 text-xs font-semibold px-2.5 py-1 bg-white border border-gray-200 rounded-lg hover:border-brand-500 text-gray-700 hover:text-brand-800 transition">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Copy HTML</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preview Area -->
+                        <div id="page-comp-preview" class="p-6 bg-white rounded-xl border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <!-- Status Badges -->
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">Completed</span>
+                                <span class="text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">In Progress</span>
+                                <span class="text-[10px] font-bold text-rose-800 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full">Pending</span>
+                                <span class="text-[10px] font-bold text-brand-800 bg-brand-50 border border-brand-200 px-2.5 py-1 rounded-full">Discussion</span>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div class="flex items-center space-x-1.5">
+                                <button class="w-8 h-8 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold transition">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                </button>
+                                <button class="w-8 h-8 rounded-xl bg-brand-800 text-white flex items-center justify-center text-xs font-bold shadow-xs">1</button>
+                                <button class="w-8 h-8 rounded-xl bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 flex items-center justify-center text-xs font-bold transition">2</button>
+                                <button class="w-8 h-8 rounded-xl bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 flex items-center justify-center text-xs font-bold transition">3</button>
+                                <button class="w-8 h-8 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold transition">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Code Area -->
+                        <div id="page-comp-code" class="hidden relative">
+                            <pre class="bg-gray-900 text-gray-100 p-4 rounded-xl overflow-x-auto text-xs"><code id="page-code-raw">&lt;!-- Donezo Pagination Controls --&gt;
+&lt;div class="flex items-center space-x-1.5"&gt;
+  &lt;button class="w-8 h-8 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center"&gt;&amp;lt;&lt;/button&gt;
+  &lt;button class="w-8 h-8 rounded-xl bg-brand-800 text-white flex items-center justify-center font-bold"&gt;1&lt;/button&gt;
+  &lt;button class="w-8 h-8 rounded-xl bg-white border text-gray-700 flex items-center justify-center"&gt;2&lt;/button&gt;
+  &lt;button class="w-8 h-8 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center"&gt;&amp;gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+<!-- ======================================================== -->
+<!-- MODAL 1: ADD NEW PROJECT POPUP                           -->
+<!-- ======================================================== -->
+<div id="modal-add-project" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs hidden transition-opacity">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-gray-100 transform transition-transform scale-95 duration-200" id="modal-add-project-box">
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-xl bg-brand-50 text-brand-800 flex items-center justify-center">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-base text-gray-900">Add New Project</h3>
+            </div>
+            <button onclick="closeModal('modal-add-project')" class="p-1 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <form onsubmit="handleProjectSubmit(event)" class="py-5 space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Project Title</label>
+                <input id="new-proj-title" type="text" required placeholder="e.g. Design System V2 Migration" class="w-full px-3.5 py-2.5 bg-gray-50/70 border border-gray-200 rounded-2xl text-xs focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">Lead Assignee</label>
+                    <select class="w-full px-3.5 py-2.5 bg-gray-50/70 border border-gray-200 rounded-2xl text-xs focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400">
+                        <option>Alexandra Deff</option>
+                        <option>Edwin Adenike</option>
+                        <option>David Oshodi</option>
+                        <option>Isaac Oluwatemilorun</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1.5">Due Date</label>
+                    <input type="date" value="2024-12-15" class="w-full px-3.5 py-2.5 bg-gray-50/70 border border-gray-200 rounded-2xl text-xs focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1.5">Project Category</label>
+                <div class="flex items-center space-x-3 text-xs">
+                    <label class="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="radio" name="cat" checked class="text-brand-800 focus:ring-brand-800">
+                        <span>Front-End</span>
+                    </label>
+                    <label class="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="radio" name="cat" class="text-brand-800 focus:ring-brand-800">
+                        <span>Design / UI</span>
+                    </label>
+                    <label class="flex items-center space-x-1.5 cursor-pointer">
+                        <input type="radio" name="cat" class="text-brand-800 focus:ring-brand-800">
+                        <span>Backend API</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2.5 pt-4 border-t border-gray-100">
+                <button type="button" onclick="closeModal('modal-add-project')" class="px-4 py-2.5 text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-2xl transition">
+                    Cancel
+                </button>
+                <button type="submit" class="px-5 py-2.5 text-xs font-semibold text-white bg-brand-800 hover:bg-brand-900 rounded-2xl shadow-md transition active:scale-95">
+                    Create Project
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- MODAL 2: CONFIRM DELETE MODAL                            -->
+<!-- ======================================================== -->
+<div id="modal-delete-confirm" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs hidden transition-opacity">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-gray-100 text-center space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
+            <i data-lucide="trash-2" class="w-6 h-6"></i>
+        </div>
+        <div>
+            <h3 class="font-bold text-base text-gray-900">Delete Project?</h3>
+            <p class="text-xs text-gray-500 mt-1">Are you sure you want to delete this repository? This action cannot be reversed.</p>
+        </div>
+        <div class="flex justify-center gap-2 pt-2">
+            <button onclick="closeModal('modal-delete-confirm')" class="px-4 py-2 text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition">
+                Cancel
+            </button>
+            <button onclick="confirmDeleteProject()" class="px-4 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition">
+                Confirm Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- INTERACTIVE JAVASCRIPT ENGINE                            -->
+<!-- ======================================================== -->
+<script>
+    // 1. Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 2. Mobile Sidebar Drawer Controls
+    const sidebar = document.getElementById('sidebar');
+    const openSidebarBtn = document.getElementById('open-sidebar-btn');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        sidebarBackdrop.classList.remove('hidden');
+    }
+
+    function closeSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        sidebarBackdrop.classList.add('hidden');
+    }
+
+    if (openSidebarBtn) openSidebarBtn.addEventListener('click', openSidebar);
+    if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+    // 3. Modal System (Show / Hide with scale animation)
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+            const box = modal.querySelector('div');
+            if (box) {
+                requestAnimationFrame(() => {
+                    box.classList.remove('scale-95');
+                    box.classList.add('scale-100');
+                });
+            }
+        }
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            const box = modal.querySelector('div');
+            if (box) {
+                box.classList.remove('scale-100');
+                box.classList.add('scale-95');
+            }
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
+    }
+
+    function handleProjectSubmit(e) {
+        e.preventDefault();
+        const title = document.getElementById('new-proj-title').value;
+        closeModal('modal-add-project');
+        triggerToast('success', 'Project Created', `"${title}" was added to the active board.`);
+    }
+
+    function confirmDeleteProject() {
+        closeModal('modal-delete-confirm');
+        triggerToast('error', 'Project Deleted', 'Item removed permanently from workspace.');
+    }
+
+    // 4. Time Tracker Timer Logic
+    let timerSeconds = 5048; // Start at 01:24:08
+    let isTimerRunning = true;
+    const timerDisplay = document.getElementById('timer-display');
+    const pauseBtn = document.getElementById('pause-btn');
+    const pauseIcon = document.getElementById('pause-icon');
+    const stopBtn = document.getElementById('stop-btn');
+    const timerStatusBadge = document.getElementById('timer-status-badge');
+
+    function formatTime(totalSecs) {
+        const hrs = Math.floor(totalSecs / 3600);
+        const mins = Math.floor((totalSecs % 3600) / 60);
+        const secs = totalSecs % 60;
+        return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    setInterval(() => {
+        if (isTimerRunning) {
+            timerSeconds++;
+            if (timerDisplay) {
+                timerDisplay.textContent = formatTime(timerSeconds);
+            }
+        }
+    }, 1000);
+
+    if (pauseBtn) {
+        pauseBtn.addEventListener('click', () => {
+            isTimerRunning = !isTimerRunning;
+            if (pauseIcon) {
+                pauseIcon.setAttribute('data-lucide', isTimerRunning ? 'pause' : 'play');
+                lucide.createIcons();
+            }
+            if (timerStatusBadge) {
+                timerStatusBadge.textContent = isTimerRunning ? 'Active' : 'Paused';
+                timerStatusBadge.className = isTimerRunning 
+                    ? 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                    : 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40';
+            }
+            triggerToast(isTimerRunning ? 'info' : 'warning', 'Timer Update', isTimerRunning ? 'Time tracking resumed.' : 'Time tracker paused.');
+        });
+    }
+
+    if (stopBtn) {
+        stopBtn.addEventListener('click', () => {
+            isTimerRunning = false;
+            timerSeconds = 0;
+            if (timerDisplay) timerDisplay.textContent = '00:00:00';
+            if (pauseIcon) {
+                pauseIcon.setAttribute('data-lucide', 'play');
+                lucide.createIcons();
+            }
+            if (timerStatusBadge) {
+                timerStatusBadge.textContent = 'Stopped';
+                timerStatusBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40';
+            }
+            triggerToast('error', 'Timer Reset', 'Time logged to current sprint record.');
+        });
+    }
+
+    // 5. Dynamic Toast Notification Engine with Countdown Bar
+    function triggerToast(type, title, message, duration = 3500) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+
+        const config = {
+            success: { bg: 'bg-emerald-50 border-emerald-200 text-emerald-950', icon: 'check-circle-2', bar: 'bg-emerald-600' },
+            warning: { bg: 'bg-amber-50 border-amber-200 text-amber-950', icon: 'alert-triangle', bar: 'bg-amber-600' },
+            error: { bg: 'bg-rose-50 border-rose-200 text-rose-950', icon: 'alert-octagon', bar: 'bg-rose-600' },
+            info: { bg: 'bg-brand-50 border-brand-200 text-brand-950', icon: 'info', bar: 'bg-brand-800' }
+        };
+
+        const theme = config[type] || config.info;
+
+        const toast = document.createElement('div');
+        toast.className = `p-4 rounded-2xl ${theme.bg} border shadow-lg flex items-start justify-between gap-3 text-xs pointer-events-auto transform transition-all duration-300 translate-y-2 opacity-0 relative overflow-hidden w-80`;
+
+        toast.innerHTML = `
+            <div class="flex items-start gap-2.5">
+                <i data-lucide="${theme.icon}" class="w-4 h-4 mt-0.5 flex-shrink-0"></i>
+                <div>
+                    <h4 class="font-bold text-xs">${title}</h4>
+                    <p class="mt-0.5 leading-relaxed text-[11px] opacity-80">${message}</p>
+                </div>
+            </div>
+            <button class="toast-close text-gray-400 hover:text-gray-700 text-sm font-bold">&times;</button>
+            <div class="toast-bar absolute bottom-0 left-0 h-1 ${theme.bar} w-full transition-all duration-linear"></div>
+        `;
+
+        container.appendChild(toast);
+        lucide.createIcons();
+
+        requestAnimationFrame(() => {
+            toast.classList.remove('translate-y-2', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            const bar = toast.querySelector('.toast-bar');
+            if (bar && duration > 0) {
+                bar.style.transition = `width ${duration}ms linear`;
+                setTimeout(() => { bar.style.width = '0%'; }, 20);
+            }
+        });
+
+        function removeToast() {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-10px) scale(0.95)';
+            setTimeout(() => toast.remove(), 250);
+        }
+
+        toast.querySelector('.toast-close').addEventListener('click', removeToast);
+        if (duration > 0) {
+            setTimeout(removeToast, duration);
+        }
+    }
+
+    // 6. UI Playground Switcher (Preview vs Code)
+    function toggleView(compId, view) {
+        const prevBox = document.getElementById(`${compId}-preview`);
+        const codeBox = document.getElementById(`${compId}-code`);
+        const btnPrev = document.getElementById(`${compId}-btn-prev`);
+        const btnCode = document.getElementById(`${compId}-btn-code`);
+
+        if (view === 'preview') {
+            prevBox.classList.remove('hidden');
+            codeBox.classList.add('hidden');
+            btnPrev.className = 'view-toggle-btn active text-xs font-semibold px-3 py-1 rounded-lg bg-brand-800 text-white';
+            btnCode.className = 'view-toggle-btn text-xs font-semibold px-3 py-1 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300';
+        } else {
+            prevBox.classList.add('hidden');
+            codeBox.classList.remove('hidden');
+            btnPrev.className = 'view-toggle-btn text-xs font-semibold px-3 py-1 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300';
+            btnCode.className = 'view-toggle-btn active text-xs font-semibold px-3 py-1 rounded-lg bg-brand-800 text-white';
+        }
+    }
+
+    // 7. 1-Click Clipboard Copy Function
+    function copySnippet(elementId) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            triggerToast('success', 'Copied to Clipboard!', 'HTML component markup is ready to paste into your project.');
+        }).catch(() => {
+            triggerToast('error', 'Copy Failed', 'Please manually select and copy the snippet.');
+        });
+    }
+
+    // 8. Playground Category Filter
+    function filterComponentTab(category) {
+        const pills = document.querySelectorAll('.cat-pill');
+        pills.forEach(p => {
+            p.classList.remove('bg-white', 'text-brand-800', 'shadow-xs');
+            p.classList.add('text-gray-600');
+        });
+        event.target.classList.add('bg-white', 'text-brand-800', 'shadow-xs');
+        event.target.classList.remove('text-gray-600');
+
+        const cards = document.querySelectorAll('.comp-card');
+        cards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
+
+    // 9. Global Keyboard Shortcut (⌘F / Ctrl+F focus search)
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'f') {
+            e.preventDefault();
+            const searchInput = document.getElementById('global-search-input');
+            if (searchInput) {
+                searchInput.focus();
+                triggerToast('info', 'Search Shortcut', 'Focused on global task & project filter.');
+            }
+        }
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-toggle-group]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const groupId = btn.getAttribute('data-toggle-group');
+            const content = document.querySelector('[data-group-content="' + groupId + '"]');
+            if (!content) return;
+            content.classList.toggle('hidden');
+            const icon = btn.querySelector('[data-lucide]');
+            if (icon) {
+                const isHidden = content.classList.contains('hidden');
+                icon.setAttribute('data-lucide', isHidden ? 'chevron-right' : 'chevron-down');
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }
+        });
+    });
+
+    const sidebar = document.getElementById('sidebar');
+    const openBtn = document.getElementById('open-sidebar-btn');
+    const closeBtn = document.getElementById('close-sidebar-btn');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (openBtn && sidebar) {
+        openBtn.addEventListener('click', () => {
+            sidebar.classList.remove('-translate-x-full');
+            if (backdrop) backdrop.classList.remove('hidden');
+        });
+    }
+    if (closeBtn && sidebar) {
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            if (backdrop) backdrop.classList.add('hidden');
+        });
+    }
+    if (backdrop && sidebar) {
+        backdrop.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            backdrop.classList.add('hidden');
+        });
+    }
+});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Sign In</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+<div class="flex-1 flex">
+    <!-- Brand panel -->
+    <div class="hidden lg:flex lg:w-1/2 bg-brand-800 relative overflow-hidden p-12 flex-col justify-between">
+        <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-white/5"></div>
+        <div class="absolute -left-16 bottom-0 w-80 h-80 rounded-full bg-brand-700/60"></div>
+        <div class="absolute right-16 bottom-24 w-40 h-40 rounded-full bg-brand-400/20"></div>
+        <div class="relative z-10 flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-white/10 text-white flex items-center justify-center">
+                <svg class="w-6 h-6 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <div><p class="font-extrabold text-2xl text-white tracking-tight leading-none">Donezo</p><p class="text-[9px] font-bold uppercase tracking-wider text-brand-300 mt-1">Project OS</p></div>
+        </div>
+        <div class="relative z-10">
+            <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight max-w-sm">Run your whole operation from one console.</h2>
+            <p class="text-xs text-brand-200 mt-4 leading-relaxed max-w-sm">Projects, inventory, payroll, support, and storefront in a single design language. No CDN, no build step, works offline.</p>
+            <div class="grid grid-cols-3 gap-4 mt-8 max-w-sm">
+                <div><p class="text-2xl font-extrabold text-white">60+</p><p class="text-[10px] text-brand-300 font-semibold mt-0.5">Pages</p></div>
+                <div><p class="text-2xl font-extrabold text-white">18</p><p class="text-[10px] text-brand-300 font-semibold mt-0.5">Components</p></div>
+                <div><p class="text-2xl font-extrabold text-white">0</p><p class="text-[10px] text-brand-300 font-semibold mt-0.5">CDN calls</p></div>
+            </div>
+        </div>
+        <p class="relative z-10 text-[10px] text-brand-300/70">© 2026 Donezo. All rights reserved.</p>
+    </div>
+
+    <!-- Form panel -->
+    <div class="flex-1 flex items-center justify-center p-6 sm:p-12">
+        <div class="w-full max-w-sm">
+            <div class="lg:hidden flex items-center gap-2.5 mb-8">
+                <div class="w-10 h-10 rounded-2xl bg-brand-800 text-white flex items-center justify-center"><svg class="w-5 h-5 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+                <p class="font-extrabold text-xl text-gray-900 tracking-tight">Donezo</p>
+            </div>
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Welcome back</h1>
+            <p class="text-xs text-gray-500 mt-1.5">Sign in to continue to your workspace.</p>
+
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                <button onclick="triggerToast('info','SSO','Redirecting to Google.')" class="donezo-btn donezo-btn-secondary"><i data-lucide="chrome" class="w-4 h-4"></i><span>Google</span></button>
+                <button onclick="triggerToast('info','SSO','Redirecting to Microsoft.')" class="donezo-btn donezo-btn-secondary"><i data-lucide="building-2" class="w-4 h-4"></i><span>Microsoft</span></button>
+            </div>
+            <div class="flex items-center gap-3 my-6"><div class="flex-1 h-px bg-gray-200"></div><span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">or with email</span><div class="flex-1 h-px bg-gray-200"></div></div>
+
+            <form onsubmit="event.preventDefault(); triggerToast('success','Signed In','Redirecting to your dashboard.');" class="space-y-4">
+                <div><label class="text-[11px] font-bold text-gray-600 block mb-1.5">Email Address</label><input type="email" value="admin@donezo.id" required class="donezo-input" placeholder="you@company.com"></div>
+                <div>
+                    <div class="flex items-center justify-between mb-1.5"><label class="text-[11px] font-bold text-gray-600">Password</label><a href="forgot-password.html" class="text-[11px] font-bold text-brand-800 hover:underline">Forgot password?</a></div>
+                    <div class="relative"><input type="password" id="login-password" value="password123" required class="donezo-input pr-11" placeholder="••••••••"><button type="button" onclick="var i=document.getElementById('login-password'); i.type = i.type === 'password' ? 'text' : 'password'; triggerToast('info','Password','Visibility toggled.');" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-800"><i data-lucide="eye" class="w-4 h-4"></i></button></div>
+                </div>
+                <label class="flex items-center gap-2.5 text-[11px] text-gray-600 font-semibold cursor-pointer"><input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 text-brand-800 focus:ring-brand-400"><span>Keep me signed in for 30 days</span></label>
+                <button type="submit" class="donezo-btn donezo-btn-primary w-full"><i data-lucide="log-in" class="w-4 h-4"></i><span>Sign In</span></button>
+            </form>
+
+            <p class="text-[11px] text-gray-500 text-center mt-6">Don't have an account? <a href="register.html" class="font-bold text-brand-800 hover:underline">Create one free</a></p>
+            <div class="flex items-center justify-center gap-3 mt-8 pt-6 border-t border-gray-100 text-[10px] text-gray-400 font-semibold">
+                <button onclick="triggerToast('info','Terms','Opening terms of service.')" class="hover:text-brand-800">Terms</button><span>·</span>
+                <button onclick="triggerToast('info','Privacy','Opening privacy policy.')" class="hover:text-brand-800">Privacy</button><span>·</span>
+                <a href="../../index.html" class="hover:text-brand-800">Back to demo</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../assets/js/donezo.js"></script>
+</body>
+</html>

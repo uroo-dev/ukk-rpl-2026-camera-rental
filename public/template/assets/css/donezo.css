@@ -1,0 +1,107 @@
+/* ============================================
+   Donezo UI — Design System Stylesheet
+   Blade-ready, zero CDN dependencies
+   ============================================ */
+
+/* Striped Custom Patterns for Bar Charts & Indicators */
+.pattern-striped {
+  background-color: #e5e7eb;
+  background-image: repeating-linear-gradient(45deg, #d1d5db, #d1d5db 4px, #f3f4f6 4px, #f3f4f6 8px);
+}
+.pattern-striped-green {
+  background-color: #c7e8d6;
+  background-image: repeating-linear-gradient(45deg, #a3d9bc, #a3d9bc 4px, #d7f0e3 4px, #d7f0e3 8px);
+}
+
+/* Donezo Card */
+.donezo-card {
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(18, 38, 25, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.donezo-card:hover {
+  box-shadow: 0 10px 25px -4px rgba(18, 38, 25, 0.08);
+}
+
+/* Donezo Buttons */
+.donezo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.625rem 1rem;
+  border-radius: 1rem;
+  transition: all 0.15s ease-out;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+}
+.donezo-btn:active { transform: scale(0.97); }
+.donezo-btn-primary { background-color: #14422b; color: #ffffff; box-shadow: 0 4px 12px -2px rgba(20, 66, 43, 0.25); }
+.donezo-btn-primary:hover { background-color: #113825; }
+.donezo-btn-secondary { background-color: #ffffff; color: #14422b; border: 1px solid #14422b; }
+.donezo-btn-secondary:hover { background-color: #eef8f3; }
+.donezo-btn-soft { background-color: #eef8f3; color: #14422b; }
+.donezo-btn-soft:hover { background-color: #d7f0e3; }
+.donezo-btn-danger { background-color: #e11d48; color: #ffffff; }
+.donezo-btn-danger:hover { background-color: #be123c; }
+.donezo-btn-ghost { background-color: transparent; color: #6b7280; }
+.donezo-btn-ghost:hover { background-color: #f3f4f6; color: #14422b; }
+
+/* Donezo Inputs */
+.donezo-input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  background-color: rgba(249, 250, 251, 0.75);
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  color: #1f2937;
+  transition: all 0.15s ease;
+}
+.donezo-input:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: #41ab75;
+  box-shadow: 0 0 0 3px rgba(65, 171, 117, 0.15);
+}
+
+/* Code Viewer */
+.code-viewer {
+  background-color: #0f172a;
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.code-viewer pre {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Gauge Donut Chart Clip */
+.gauge-clip { clip-path: polygon(0 0, 100% 0, 100% 70%, 0 70%); }
+
+/* Antialiasing */
+* { -webkit-font-smoothing: antialiased; }
+
+/* Print styles for invoice/receipt */
+@media print {
+  .no-print { display: none !important; }
+  .print-area { box-shadow: none !important; border: none !important; }
+  body { background: white !important; }
+}

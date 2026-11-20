@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Server Error</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+<div class="flex-1 flex items-center justify-center p-6 relative overflow-hidden bg-brand-dark">
+    <div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-white/5"></div>
+    <div class="absolute -bottom-40 -left-20 w-96 h-96 rounded-full bg-brand-800/60"></div>
+    <div class="relative z-10 text-center max-w-lg">
+        <p class="text-[120px] sm:text-[160px] font-extrabold leading-none tracking-tighter text-white/10 select-none">500</p>
+        <div class="w-20 h-20 rounded-3xl bg-white/10 text-rose-400 flex items-center justify-center mx-auto -mt-16 relative z-10 border border-white/10"><i data-lucide="server-crash" class="w-9 h-9"></i></div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-6">Something broke on our side</h1>
+        <p class="text-xs text-gray-400 mt-3 leading-relaxed">An unexpected error occurred while processing your request. Our engineers have been notified automatically and the incident is being triaged now.</p>
+
+        <div class="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-left">
+            <div class="flex items-center justify-between mb-2">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Incident Reference</p>
+                <button onclick="triggerToast('success','Copied','Incident reference copied to clipboard.')" class="text-[10px] font-bold text-brand-300 hover:text-white flex items-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i>Copy</button>
+            </div>
+            <p class="font-mono text-[11px] text-gray-300">trace_id: 9f2c81ab-4471-4e0d-b3aa-2c6f0d91e7b4</p>
+            <p class="font-mono text-[11px] text-gray-500 mt-1">timestamp: 2026-10-12T18:24:07+07:00 · region: ap-southeast-1</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+            <button onclick="location.reload()" class="w-full sm:w-auto py-2.5 px-5 bg-white text-brand-800 rounded-2xl text-xs font-extrabold hover:bg-brand-50 transition flex items-center justify-center gap-2"><i data-lucide="rotate-cw" class="w-4 h-4"></i>Retry Request</button>
+            <a href="../../index.html" class="donezo-btn donezo-btn-ghost border border-white/20 text-white w-full sm:w-auto"><i data-lucide="home" class="w-4 h-4"></i><span>Go to Dashboard</span></a>
+        </div>
+
+        <div class="flex items-center justify-center gap-4 mt-10 text-[11px] font-semibold text-gray-500">
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>API operational</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Database healthy</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span>Web app degraded</span>
+        </div>
+        <p class="text-[11px] text-gray-500 mt-6">Need immediate help? <a href="../support/tickets.html" class="font-bold text-brand-300 hover:text-white">Open a priority ticket</a></p>
+    </div>
+</div>
+<script src="../../assets/js/donezo.js"></script>
+</body>
+</html>

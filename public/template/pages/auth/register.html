@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Create Account</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+<div class="flex-1 flex">
+    <div class="hidden lg:flex lg:w-2/5 bg-brand-800 relative overflow-hidden p-12 flex-col justify-between">
+        <div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-white/5"></div>
+        <div class="absolute right-0 top-16 w-56 h-56 rounded-full bg-brand-400/20"></div>
+        <div class="relative z-10 flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-white/10 text-white flex items-center justify-center"><svg class="w-6 h-6 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+            <p class="font-extrabold text-2xl text-white tracking-tight">Donezo</p>
+        </div>
+        <div class="relative z-10 space-y-5">
+            <h2 class="text-2xl font-extrabold text-white tracking-tight leading-snug max-w-xs">Start your workspace in under two minutes.</h2>
+            <div class="space-y-3 max-w-xs">
+                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-lg bg-white/10 text-brand-300 flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><p class="text-[11px] text-brand-200 leading-relaxed">All 60+ pages and 18 component references included</p></div>
+                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-lg bg-white/10 text-brand-300 flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><p class="text-[11px] text-brand-200 leading-relaxed">Local fonts, icons, and charts. No CDN required</p></div>
+                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-lg bg-white/10 text-brand-300 flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><p class="text-[11px] text-brand-200 leading-relaxed">Blade-ready markup for Laravel projects</p></div>
+                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-lg bg-white/10 text-brand-300 flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3.5 h-3.5"></i></span><p class="text-[11px] text-brand-200 leading-relaxed">14-day Professional trial, no card needed</p></div>
+            </div>
+        </div>
+        <p class="relative z-10 text-[10px] text-brand-300/70">© 2026 Donezo. All rights reserved.</p>
+    </div>
+
+    <div class="flex-1 flex items-center justify-center p-6 sm:p-12">
+        <div class="w-full max-w-md">
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Create your account</h1>
+            <p class="text-xs text-gray-500 mt-1.5">Already registered? <a href="login.html" class="font-bold text-brand-800 hover:underline">Sign in instead</a></p>
+
+            <form onsubmit="event.preventDefault(); triggerToast('success','Account Created','Verification email sent to your inbox.');" class="space-y-4 mt-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div><label class="text-[11px] font-bold text-gray-600 block mb-1.5">First Name</label><input type="text" required class="donezo-input" placeholder="Alya"></div>
+                    <div><label class="text-[11px] font-bold text-gray-600 block mb-1.5">Last Name</label><input type="text" required class="donezo-input" placeholder="Pratama"></div>
+                </div>
+                <div><label class="text-[11px] font-bold text-gray-600 block mb-1.5">Work Email</label><input type="email" required class="donezo-input" placeholder="you@company.com"></div>
+                <div><label class="text-[11px] font-bold text-gray-600 block mb-1.5">Company / Workspace Name</label><input type="text" class="donezo-input" placeholder="Nordwind Studio"></div>
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1.5">Password</label>
+                    <div class="relative"><input type="password" id="reg-password" required class="donezo-input pr-11" placeholder="At least 8 characters"><button type="button" onclick="var i=document.getElementById('reg-password'); i.type = i.type === 'password' ? 'text' : 'password'; triggerToast('info','Password','Visibility toggled.');" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-800"><i data-lucide="eye" class="w-4 h-4"></i></button></div>
+                    <div class="flex items-center gap-1.5 mt-2.5">
+                        <div class="flex-1 h-1.5 rounded-full bg-emerald-500"></div>
+                        <div class="flex-1 h-1.5 rounded-full bg-emerald-500"></div>
+                        <div class="flex-1 h-1.5 rounded-full bg-amber-400"></div>
+                        <div class="flex-1 h-1.5 rounded-full bg-gray-200"></div>
+                        <span class="text-[10px] font-bold text-amber-600 ml-1">Medium</span>
+                    </div>
+                </div>
+                <div><label class="text-[11px] font-bold text-gray-600 block mb-1.5">Confirm Password</label><input type="password" required class="donezo-input" placeholder="Repeat your password"></div>
+                <label class="flex items-start gap-2.5 text-[11px] text-gray-600 font-semibold cursor-pointer"><input type="checkbox" required class="w-4 h-4 rounded border-gray-300 text-brand-800 focus:ring-brand-400 mt-0.5"><span>I agree to the <button type="button" onclick="triggerToast('info','Terms','Opening terms of service.')" class="font-bold text-brand-800 hover:underline">Terms of Service</button> and <button type="button" onclick="triggerToast('info','Privacy','Opening privacy policy.')" class="font-bold text-brand-800 hover:underline">Privacy Policy</button>.</span></label>
+                <button type="submit" class="donezo-btn donezo-btn-primary w-full"><i data-lucide="user-plus" class="w-4 h-4"></i><span>Create Account</span></button>
+            </form>
+
+            <div class="flex items-center justify-center gap-3 mt-8 pt-6 border-t border-gray-100 text-[10px] text-gray-400 font-semibold">
+                <a href="../../index.html" class="hover:text-brand-800">Back to demo</a><span>·</span><a href="../support/faq.html" class="hover:text-brand-800">FAQ</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../assets/js/donezo.js"></script>
+</body>
+</html>

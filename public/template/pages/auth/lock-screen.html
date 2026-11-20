@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Lock Screen</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+<div class="flex-1 relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&q=80&w=1600" alt="" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-brand-dark/70 backdrop-blur-sm"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-6">
+        <div class="w-full max-w-sm">
+            <p class="text-center text-white/80 text-xs font-semibold mb-1">Monday, 12 October 2026</p>
+            <p class="text-center text-white text-4xl font-extrabold tracking-tight mb-8">18:24</p>
+
+            <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-floating">
+                <div class="flex flex-col items-center">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200" class="w-20 h-20 rounded-3xl object-cover border-4 border-white/30 shadow-lg" alt="Alya Pratama">
+                    <p class="text-sm font-extrabold text-white mt-4">Alya Pratama</p>
+                    <p class="text-[11px] text-white/60 mt-0.5">admin@donezo.id · Session locked</p>
+                </div>
+                <form onsubmit="event.preventDefault(); triggerToast('success','Unlocked','Welcome back, session restored.');" class="space-y-3 mt-6">
+                    <div class="relative">
+                        <i data-lucide="lock" class="w-4 h-4 text-white/50 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                        <input type="password" required placeholder="Enter your password" class="w-full pl-11 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-2xl text-xs font-semibold text-white placeholder-white/40 focus:outline-none focus:ring-4 focus:ring-brand-400/30 focus:border-white/40 transition">
+                    </div>
+                    <button type="submit" class="w-full py-3.5 bg-white text-brand-800 rounded-2xl text-xs font-extrabold hover:bg-brand-50 transition flex items-center justify-center gap-2"><i data-lucide="log-in" class="w-4 h-4"></i>Unlock Session</button>
+                </form>
+                <div class="flex items-center justify-between mt-5 pt-5 border-t border-white/10">
+                    <a href="forgot-password.html" class="text-[11px] font-bold text-white/70 hover:text-white">Forgot password?</a>
+                    <a href="login.html" class="text-[11px] font-bold text-white/70 hover:text-white flex items-center gap-1.5"><i data-lucide="log-out" class="w-3.5 h-3.5"></i>Sign out</a>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 mt-6 text-white/50">
+                <button onclick="triggerToast('info','Biometric','Use fingerprint or face ID to unlock.')" class="flex items-center gap-1.5 text-[11px] font-bold hover:text-white"><i data-lucide="fingerprint" class="w-4 h-4"></i>Biometric</button>
+                <span class="w-1 h-1 rounded-full bg-white/30"></span>
+                <button onclick="triggerToast('info','Help','Lock screen help opened.')" class="flex items-center gap-1.5 text-[11px] font-bold hover:text-white"><i data-lucide="help-circle" class="w-4 h-4"></i>Help</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../assets/js/donezo.js"></script>
+</body>
+</html>

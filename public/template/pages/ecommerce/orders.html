@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Orders</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+
+<body
+    class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+    <div class="flex h-screen overflow-hidden p-2 sm:p-4 gap-4">
+        <aside id="sidebar"
+            class="fixed inset-y-0 left-0 z-40 w-64 bg-white rounded-3xl p-5 flex flex-col justify-between shadow-card transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out my-2 md:my-0 ml-2 md:ml-0 shrink-0 border border-gray-100 overflow-y-auto">
+
+            <!-- Top Brand Logo -->
+            <div class="flex items-center justify-between pb-5 border-b border-gray-100 shrink-0">
+                <a href="../../index.html" class="flex items-center space-x-3 group">
+                    <div
+                        class="w-10 h-10 rounded-2xl bg-brand-800 text-white flex items-center justify-center font-bold text-xl shadow-md transition-transform group-hover:scale-105">
+                        <svg class="w-6 h-6 text-brand-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 5 5 0 0 1 5-5"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-bold text-2xl tracking-tight text-gray-900 leading-none block">Donezo</span>
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-brand-600 block mt-0.5">Project
+                            OS</span>
+                    </div>
+                </a>
+                <button id="close-sidebar-btn"
+                    class="md:hidden p-1.5 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Scroll Area -->
+            <div class="flex-1 overflow-y-auto py-5 space-y-5 pr-1">
+
+                <!-- DASHBOARD -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Main</p>
+                    <nav class="space-y-1">
+                        <a href="../../index.html"
+                            class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="layout-grid" class="w-4 h-4 text-gray-500"></i>
+                                <span>Dashboard</span>
+                            </div>
+
+                        </a>
+                        <a href="../../pages/admin/tasks.html"
+                            class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="check-square" class="w-4 h-4 text-gray-500"></i>
+                                <span>Tasks Backlog</span>
+                            </div>
+                            <span
+                                class="bg-brand-800 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12+</span>
+                        </a>
+                        <a href="../../pages/admin/team.html"
+                            class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="users" class="w-4 h-4 text-gray-500"></i>
+                                <span>Team</span>
+                            </div>
+
+                        </a>
+                        <a href="../../pages/admin/calendar.html"
+                            class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                                <span>Calendar</span>
+                            </div>
+
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- ADMIN PAGES -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Admin</p>
+                    <div>
+                        <button data-toggle-group="admin"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-gray-500"></i>
+                                <span>Admin Pages</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="admin"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/admin/dashboard.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="layout-grid" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Dashboard</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/tasks.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="check-square" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Tasks Backlog</span>
+                                </div>
+                                <span
+                                    class="bg-brand-800 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">12+</span>
+                            </a><a href="../../pages/admin/team.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="users" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Team</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/calendar.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Calendar</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/analytics.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="trending-up" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Analytics</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/messages.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="message-square" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Messages</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/profile.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="user" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Profile</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/settings.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="settings" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Settings</span>
+                                </div>
+
+                            </a><a href="../../pages/admin/blank.html"
+                                class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                                <div class="flex items-center space-x-3">
+                                    <i data-lucide="file" class="w-4 h-4 text-gray-500"></i>
+                                    <span>Blank Page</span>
+                                </div>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E-COMMERCE -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Commerce</p>
+                    <div>
+                        <button data-toggle-group="ecommerce"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-brand-50 text-brand-800">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="shopping-cart" class="w-4 h-4 text-brand-700"></i>
+                                <span>E-Commerce</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="ecommerce"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 ">
+                            <a href="../../pages/ecommerce/products.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                                <span>Products</span>
+                            </a><a href="../../pages/ecommerce/product-detail.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="package" class="w-3.5 h-3.5"></i>
+                                <span>Product Detail</span>
+                            </a><a href="../../pages/ecommerce/cart.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                <span>Cart</span>
+                            </a><a href="../../pages/ecommerce/checkout.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                                <span>Checkout</span>
+                            </a><a href="../../pages/ecommerce/orders.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all bg-brand-800 text-white shadow-xs">
+                                <i data-lucide="package-check" class="w-3.5 h-3.5"></i>
+                                <span>Orders</span>
+                            </a><a href="../../pages/ecommerce/invoice.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+                                <span>Invoice / Nota</span>
+                            </a><a href="../../pages/ecommerce/ecommerce-customers.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                                <span>Customers</span>
+                            </a><a href="../../pages/ecommerce/reviews.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="pos"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="calculator" class="w-4 h-4 text-gray-500"></i>
+                                <span>Point of Sale</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="pos"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/pos/cashier.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                                <span>Cashier</span>
+                            </a><a href="../../pages/pos/pos-tables.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="grid-3x3" class="w-3.5 h-3.5"></i>
+                                <span>Tables</span>
+                            </a><a href="../../pages/pos/kitchen.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="chef-hat" class="w-3.5 h-3.5"></i>
+                                <span>Kitchen</span>
+                            </a><a href="../../pages/pos/receipt.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                                <span>Receipt</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MANAGEMENT -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Management</p>
+                    <div>
+                        <button data-toggle-group="crm"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="contact" class="w-4 h-4 text-gray-500"></i>
+                                <span>CRM</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="crm"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/crm/customers.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="contact" class="w-3.5 h-3.5"></i>
+                                <span>Customers</span>
+                            </a><a href="../../pages/crm/customer-detail.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="user-search" class="w-3.5 h-3.5"></i>
+                                <span>Customer Detail</span>
+                            </a><a href="../../pages/crm/leads.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                                <span>Leads</span>
+                            </a><a href="../../pages/crm/deals.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="handshake" class="w-3.5 h-3.5"></i>
+                                <span>Deals</span>
+                            </a><a href="../../pages/crm/activities.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+                                <span>Activities</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="hr"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="users-round" class="w-4 h-4 text-gray-500"></i>
+                                <span>Human Resources</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="hr"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/hr/employees.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+                                <span>Employees</span>
+                            </a><a href="../../pages/hr/attendance.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="fingerprint" class="w-3.5 h-3.5"></i>
+                                <span>Attendance</span>
+                            </a><a href="../../pages/hr/payroll.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+                                <span>Payroll</span>
+                            </a><a href="../../pages/hr/leave.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="calendar-off" class="w-3.5 h-3.5"></i>
+                                <span>Leave</span>
+                            </a><a href="../../pages/hr/recruitment.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+                                <span>Recruitment</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="inventory"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="boxes" class="w-4 h-4 text-gray-500"></i>
+                                <span>Inventory</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="inventory"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/inventory/stock.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
+                                <span>Stock</span>
+                            </a><a href="../../pages/inventory/movements.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+                                <span>Movements</span>
+                            </a><a href="../../pages/inventory/suppliers.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+                                <span>Suppliers</span>
+                            </a><a href="../../pages/inventory/warehouses.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
+                                <span>Warehouses</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="finance"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="wallet" class="w-4 h-4 text-gray-500"></i>
+                                <span>Finance</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="finance"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/finance/expense.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="arrow-down-circle" class="w-3.5 h-3.5"></i>
+                                <span>Expense</span>
+                            </a><a href="../../pages/finance/income.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="arrow-up-circle" class="w-3.5 h-3.5"></i>
+                                <span>Income</span>
+                            </a><a href="../../pages/finance/transactions.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
+                                <span>Transactions</span>
+                            </a><a href="../../pages/finance/tax-report.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                                <span>Tax Report</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OPERATIONS -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Operations</p>
+                    <div>
+                        <button data-toggle-group="support"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="life-buoy" class="w-4 h-4 text-gray-500"></i>
+                                <span>Support</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="support"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/support/tickets.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+                                <span>Tickets</span>
+                            </a><a href="../../pages/support/ticket-detail.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                <span>Ticket Detail</span>
+                            </a><a href="../../pages/support/knowledge-base.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                                <span>Knowledge Base</span>
+                            </a><a href="../../pages/support/faq.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+                                <span>FAQ</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="projects"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="folder-kanban" class="w-4 h-4 text-gray-500"></i>
+                                <span>Projects</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="projects"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/projects/kanban.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="trello" class="w-3.5 h-3.5"></i>
+                                <span>Kanban</span>
+                            </a><a href="../../pages/projects/gantt.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>
+                                <span>Gantt Chart</span>
+                            </a><a href="../../pages/projects/project-detail.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="folder-kanban" class="w-3.5 h-3.5"></i>
+                                <span>Project Detail</span>
+                            </a><a href="../../pages/projects/milestones.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="flag" class="w-3.5 h-3.5"></i>
+                                <span>Milestones</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="healthcare"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="heart-pulse" class="w-4 h-4 text-gray-500"></i>
+                                <span>Healthcare</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="healthcare"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/healthcare/patients.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="heart-pulse" class="w-3.5 h-3.5"></i>
+                                <span>Patients</span>
+                            </a><a href="../../pages/healthcare/doctors.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="stethoscope" class="w-3.5 h-3.5"></i>
+                                <span>Doctors</span>
+                            </a><a href="../../pages/healthcare/appointments.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="calendar-clock" class="w-3.5 h-3.5"></i>
+                                <span>Appointments</span>
+                            </a><a href="../../pages/healthcare/medical-records.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="file-heart" class="w-3.5 h-3.5"></i>
+                                <span>Medical Records</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXTRAS -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">Extras</p>
+                    <div>
+                        <button data-toggle-group="saas"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="globe" class="w-4 h-4 text-gray-500"></i>
+                                <span>SaaS Pages</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="saas"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/saas/pricing.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                                <span>Pricing</span>
+                            </a><a href="../../pages/saas/features.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                                <span>Features</span>
+                            </a><a href="../../pages/saas/about.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                <span>About</span>
+                            </a><a href="../../pages/saas/contact.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                                <span>Contact</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="communication"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="mail" class="w-4 h-4 text-gray-500"></i>
+                                <span>Communication</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="communication"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/communication/inbox.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="inbox" class="w-3.5 h-3.5"></i>
+                                <span>Inbox</span>
+                            </a><a href="../../pages/communication/chat.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="messages-square" class="w-3.5 h-3.5"></i>
+                                <span>Chat</span>
+                            </a><a href="../../pages/communication/notifications.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="files"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="folder" class="w-4 h-4 text-gray-500"></i>
+                                <span>File Manager</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="files"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/files/file-browser.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="folder" class="w-3.5 h-3.5"></i>
+                                <span>File Browser</span>
+                            </a><a href="../../pages/files/uploader.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                                <span>Uploader</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <button data-toggle-group="auth"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="lock" class="w-4 h-4 text-gray-500"></i>
+                                <span>Auth & Errors</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="auth"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../pages/auth/login.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+                                <span>Login</span>
+                            </a><a href="../../pages/auth/register.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+                                <span>Register</span>
+                            </a><a href="../../pages/auth/forgot-password.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="key-round" class="w-3.5 h-3.5"></i>
+                                <span>Forgot Password</span>
+                            </a><a href="../../pages/auth/lock-screen.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                                <span>Lock Screen</span>
+                            </a><a href="../../pages/error/404.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="frown" class="w-3.5 h-3.5"></i>
+                                <span>404 Error</span>
+                            </a><a href="../../pages/error/500.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="server-crash" class="w-3.5 h-3.5"></i>
+                                <span>500 Error</span>
+                            </a>
+                        </div>
+                    </div>
+                    <nav class="space-y-1 mt-1">
+                        <a href="../../pages/landing/index.html"
+                            class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all relative text-gray-600 hover:text-gray-900 hover:bg-gray-50">
+
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="rocket" class="w-4 h-4 text-gray-500"></i>
+                                <span>Landing Page</span>
+                            </div>
+
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- UI COMPONENTS -->
+                <div>
+                    <div class="flex items-center justify-between px-3 mb-2.5">
+                        <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">UI Toolkit</p>
+                        <span
+                            class="bg-brand-100 text-brand-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded">BLADE</span>
+                    </div>
+                    <div>
+                        <button data-toggle-group="components"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-sm font-semibold transition-all text-gray-700 hover:bg-gray-50">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="box" class="w-4 h-4 text-gray-500"></i>
+                                <span>UI Components</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 transition-transform"></i>
+                        </button>
+                        <div data-group-content="components"
+                            class="pl-4 pr-1 mt-1.5 space-y-1 border-l-2 border-brand-100 ml-5 hidden">
+                            <a href="../../components/buttons.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5"></i>
+                                <span>Buttons</span>
+                            </a><a href="../../components/forms.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                <span>Forms & Inputs</span>
+                            </a><a href="../../components/alerts.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+                                <span>Alerts & Toasts</span>
+                            </a><a href="../../components/modals.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                                <span>Modals & Dialogs</span>
+                            </a><a href="../../components/cards.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                                <span>Cards & Widgets</span>
+                            </a><a href="../../components/tables.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="table" class="w-3.5 h-3.5"></i>
+                                <span>Tables & Lists</span>
+                            </a><a href="../../components/badges.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                                <span>Badges & Pills</span>
+                            </a><a href="../../components/datetime.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                                <span>Date & Time</span>
+                            </a><a href="../../components/charts.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
+                                <span>Charts</span>
+                            </a><a href="../../components/tabs.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="panel-top" class="w-3.5 h-3.5"></i>
+                                <span>Tabs</span>
+                            </a><a href="../../components/dropdowns.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                                <span>Dropdowns</span>
+                            </a><a href="../../components/pagination.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="chevrons-right" class="w-3.5 h-3.5"></i>
+                                <span>Pagination</span>
+                            </a><a href="../../components/progress.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="loader" class="w-3.5 h-3.5"></i>
+                                <span>Progress</span>
+                            </a><a href="../../components/avatars.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="user-circle" class="w-3.5 h-3.5"></i>
+                                <span>Avatars</span>
+                            </a><a href="../../components/timeline.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="git-commit" class="w-3.5 h-3.5"></i>
+                                <span>Timeline</span>
+                            </a><a href="../../components/tooltips.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                <span>Tooltips</span>
+                            </a><a href="../../components/skeleton.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="loader-2" class="w-3.5 h-3.5"></i>
+                                <span>Skeleton</span>
+                            </a><a href="../../components/icons.html"
+                                class="flex items-center space-x-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-gray-600 hover:text-brand-800 hover:bg-brand-50/60">
+                                <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                                <span>Icon Gallery</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GENERAL -->
+                <div>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-3">General</p>
+                    <nav class="space-y-1">
+                        <button onclick="triggerToast('info', 'Settings', 'Settings dialog ready.')"
+                            class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-gray-600 hover:text-gray-900 hover:bg-gray-50 text-sm font-semibold transition-all text-left">
+                            <i data-lucide="settings" class="w-4 h-4 text-gray-500"></i><span>Settings</span>
+                        </button>
+                        <button onclick="triggerToast('info', 'Help Center', 'Documentation & support guide opened.')"
+                            class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-gray-600 hover:text-gray-900 hover:bg-gray-50 text-sm font-semibold transition-all text-left">
+                            <i data-lucide="help-circle" class="w-4 h-4 text-gray-500"></i><span>Help & Docs</span>
+                        </button>
+                        <a href="../../pages/auth/login.html"
+                            class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-gray-500 hover:text-rose-600 hover:bg-rose-50 text-sm font-semibold transition-all text-left">
+                            <i data-lucide="log-out" class="w-4 h-4"></i><span>Logout</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Bottom Mobile App Promo Card -->
+            <div class="relative overflow-hidden bg-brand-dark rounded-2xl p-4 text-white shadow-lg mt-auto shrink-0">
+                <div class="absolute -right-4 -bottom-4 opacity-20 pointer-events-none">
+                    <svg width="120" height="120" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                        <circle cx="50" cy="50" r="40" stroke-width="4"></circle>
+                        <circle cx="50" cy="50" r="25" stroke-width="3"></circle>
+                    </svg>
+                </div>
+                <div class="relative z-10">
+                    <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-2.5">
+                        <i data-lucide="smartphone" class="w-4 h-4 text-brand-300"></i>
+                    </div>
+                    <h4 class="font-bold text-xs text-white leading-tight">Donezo Mobile App</h4>
+                    <p class="text-[10px] text-gray-300 mt-0.5 mb-2.5">Available on iOS & Android</p>
+                    <button onclick="triggerToast('info', 'Download', 'Redirecting to App Store...')"
+                        class="w-full py-1.5 bg-brand-800 hover:bg-brand-700 text-white font-semibold text-xs rounded-xl transition shadow border border-brand-600/40">
+                        Download
+                    </button>
+                </div>
+            </div>
+
+        </aside>
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-black/30 backdrop-blur-xs z-30 hidden md:hidden"></div>
+        <div class="flex-1 flex flex-col h-full overflow-y-auto pr-1">
+            <header
+                class="flex items-center justify-between py-3 mb-4 gap-4 sticky top-0 bg-[#f3f5f4]/90 backdrop-blur-md z-20">
+                <div class="flex items-center gap-3">
+                    <button id="open-sidebar-btn"
+                        class="md:hidden p-2 rounded-2xl bg-white text-gray-600 shadow-sm border border-gray-100"><i
+                            data-lucide="menu" class="w-5 h-5"></i></button>
+                    <div>
+                        <h1 class="font-bold text-xl sm:text-2xl text-gray-900 tracking-tight">Order Management</h1>
+                        <p class="text-xs text-gray-500 mt-0.5">Track fulfilment, payments, and refunds across every
+                            channel.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2"><button
+                        onclick="triggerToast('info','Bulk Actions','Bulk Actions action triggered.')"
+                        class="donezo-btn donezo-btn-ghost border border-gray-200"><i data-lucide="layers"
+                            class="w-4 h-4"></i><span class="hidden sm:inline">Bulk Actions</span></button><button
+                        onclick="triggerToast('success','Created','Create Order has been created.')"
+                        class="donezo-btn donezo-btn-primary"><i data-lucide="plus" class="w-4 h-4"></i><span
+                            class="hidden sm:inline">Create Order</span></button></div>
+            </header>
+            <main class="space-y-6 pb-12">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="donezo-card p-5">
+                        <div class="w-10 h-10 rounded-2xl bg-brand-50 text-brand-800 flex items-center justify-center">
+                            <i data-lucide="receipt" class="w-5 h-5"></i></div>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-3 tracking-tight">3,912</p>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Total Orders</p>
+                    </div>
+                    <div class="donezo-card p-5">
+                        <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <i data-lucide="clock" class="w-5 h-5"></i></div>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-3 tracking-tight">86</p>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Pending Payment</p>
+                    </div>
+                    <div class="donezo-card p-5">
+                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center"><i
+                                data-lucide="truck" class="w-5 h-5"></i></div>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-3 tracking-tight">214</p>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-0.5">In Fulfillment</p>
+                    </div>
+                    <div class="donezo-card p-5">
+                        <div
+                            class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <i data-lucide="badge-dollar-sign" class="w-5 h-5"></i></div>
+                        <p class="text-2xl font-extrabold text-gray-900 mt-3 tracking-tight">$84.2K</p>
+                        <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Revenue (30d)</p>
+                    </div>
+                </div>
+
+                <div class="donezo-card overflow-hidden">
+                    <div
+                        class="p-5 flex flex-col lg:flex-row items-center justify-between gap-3 border-b border-gray-100">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <button
+                                class="px-3 py-1.5 text-xs font-bold rounded-xl bg-brand-800 text-white">All</button>
+                            <button onclick="triggerToast('info','Filter','Showing paid orders.')"
+                                class="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-100 text-gray-600 hover:text-gray-900">Paid</button>
+                            <button onclick="triggerToast('info','Filter','Showing processing orders.')"
+                                class="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-100 text-gray-600 hover:text-gray-900">Processing</button>
+                            <button onclick="triggerToast('info','Filter','Showing shipped orders.')"
+                                class="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-100 text-gray-600 hover:text-gray-900">Shipped</button>
+                            <button onclick="triggerToast('info','Filter','Showing refunded orders.')"
+                                class="px-3 py-1.5 text-xs font-bold rounded-xl bg-gray-100 text-gray-600 hover:text-gray-900">Refunded</button>
+                        </div>
+                        <div class="flex items-center gap-2 w-full lg:w-auto">
+                            <div class="relative flex-1 lg:w-56"><i data-lucide="search"
+                                    class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i><input
+                                    type="text" placeholder="Search order ID..." class="donezo-input pl-10"></div>
+                            <button onclick="triggerToast('success','Export','Orders exported to CSV.')"
+                                class="donezo-btn donezo-btn-ghost border border-gray-200 shrink-0"><i
+                                    data-lucide="download" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50/80 text-[10px] uppercase tracking-wider text-gray-500 font-bold">
+                                <tr>
+                                    <th class="px-5 py-3">Order</th>
+                                    <th class="px-5 py-3">Customer</th>
+                                    <th class="px-5 py-3">Date</th>
+                                    <th class="px-5 py-3">Items</th>
+                                    <th class="px-5 py-3">Total</th>
+                                    <th class="px-5 py-3">Payment</th>
+                                    <th class="px-5 py-3">Status</th>
+                                    <th class="px-5 py-3 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-xs divide-y divide-gray-50">
+                                <tr class="hover:bg-brand-50/40 transition">
+                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">#DZ-90231</td>
+                                    <td class="px-5 py-3.5">
+                                        <div class="flex items-center gap-2.5"><img
+                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=80"
+                                                class="w-7 h-7 rounded-full object-cover"><span
+                                                class="font-semibold text-gray-800">Alya Pratama</span></div>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-gray-500">12 Oct 2026</td>
+                                    <td class="px-5 py-3.5 text-gray-600 font-semibold">4</td>
+                                    <td class="px-5 py-3.5 font-extrabold text-gray-900">$774.48</td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full">Paid</span>
+                                    </td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-1 rounded-full">Shipped</span>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-right"><a href="invoice.html"
+                                            class="text-[11px] font-bold text-brand-800 hover:underline">Invoice</a>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/40 transition">
+                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">#DZ-90230</td>
+                                    <td class="px-5 py-3.5">
+                                        <div class="flex items-center gap-2.5"><img
+                                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=80"
+                                                class="w-7 h-7 rounded-full object-cover"><span
+                                                class="font-semibold text-gray-800">Dimas Saputra</span></div>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-gray-500">12 Oct 2026</td>
+                                    <td class="px-5 py-3.5 text-gray-600 font-semibold">1</td>
+                                    <td class="px-5 py-3.5 font-extrabold text-gray-900">$129.00</td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-amber-50 text-amber-700 px-2 py-1 rounded-full">Pending</span>
+                                    </td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Processing</span>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-right"><a href="invoice.html"
+                                            class="text-[11px] font-bold text-brand-800 hover:underline">Invoice</a>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/40 transition">
+                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">#DZ-90228</td>
+                                    <td class="px-5 py-3.5">
+                                        <div class="flex items-center gap-2.5"><img
+                                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=80"
+                                                class="w-7 h-7 rounded-full object-cover"><span
+                                                class="font-semibold text-gray-800">Sarah Wijaya</span></div>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-gray-500">11 Oct 2026</td>
+                                    <td class="px-5 py-3.5 text-gray-600 font-semibold">6</td>
+                                    <td class="px-5 py-3.5 font-extrabold text-gray-900">$1,204.50</td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full">Paid</span>
+                                    </td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full">Delivered</span>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-right"><a href="invoice.html"
+                                            class="text-[11px] font-bold text-brand-800 hover:underline">Invoice</a>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/40 transition">
+                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">#DZ-90225</td>
+                                    <td class="px-5 py-3.5">
+                                        <div class="flex items-center gap-2.5"><img
+                                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=80"
+                                                class="w-7 h-7 rounded-full object-cover"><span
+                                                class="font-semibold text-gray-800">Bagas Nugroho</span></div>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-gray-500">10 Oct 2026</td>
+                                    <td class="px-5 py-3.5 text-gray-600 font-semibold">2</td>
+                                    <td class="px-5 py-3.5 font-extrabold text-gray-900">$318.00</td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-rose-50 text-rose-700 px-2 py-1 rounded-full">Refunded</span>
+                                    </td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-rose-50 text-rose-700 px-2 py-1 rounded-full">Cancelled</span>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-right"><a href="invoice.html"
+                                            class="text-[11px] font-bold text-brand-800 hover:underline">Invoice</a>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-brand-50/40 transition">
+                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">#DZ-90221</td>
+                                    <td class="px-5 py-3.5">
+                                        <div class="flex items-center gap-2.5"><img
+                                                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=80"
+                                                class="w-7 h-7 rounded-full object-cover"><span
+                                                class="font-semibold text-gray-800">Maya Kusuma</span></div>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-gray-500">09 Oct 2026</td>
+                                    <td class="px-5 py-3.5 text-gray-600 font-semibold">3</td>
+                                    <td class="px-5 py-3.5 font-extrabold text-gray-900">$456.20</td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full">Paid</span>
+                                    </td>
+                                    <td class="px-5 py-3.5"><span
+                                            class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-1 rounded-full">Delivered</span>
+                                    </td>
+                                    <td class="px-5 py-3.5 text-right"><a href="invoice.html"
+                                            class="text-[11px] font-bold text-brand-800 hover:underline">Invoice</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 flex items-center justify-between border-t border-gray-100">
+                        <p class="text-[11px] text-gray-500 font-semibold">Showing 1-5 of 3,912 orders</p>
+                        <div class="flex items-center gap-1.5">
+                            <button
+                                class="w-8 h-8 rounded-xl border border-gray-200 text-gray-400 flex items-center justify-center"><i
+                                    data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                            <button
+                                class="w-8 h-8 rounded-xl bg-brand-800 text-white text-xs font-bold flex items-center justify-center">1</button>
+                            <button onclick="triggerToast('info','Pagination','Loading page 2.')"
+                                class="w-8 h-8 rounded-xl border border-gray-200 text-gray-600 text-xs font-bold flex items-center justify-center">2</button>
+                            <button onclick="triggerToast('info','Pagination','Loading next page.')"
+                                class="w-8 h-8 rounded-xl border border-gray-200 text-gray-600 flex items-center justify-center"><i
+                                    data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../../assets/js/donezo.js"></script>
+</body>
+
+</html>

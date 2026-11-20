@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donezo — Page Not Found</title>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/donezo.css">
+    <script src="../../assets/vendor/lucide.min.js"></script>
+</head>
+<body class="bg-[#f3f5f4] text-gray-900 font-sans antialiased h-full flex flex-col selection:bg-brand-400 selection:text-white">
+<div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+<div class="flex-1 flex items-center justify-center p-6 relative overflow-hidden">
+    <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-brand-50"></div>
+    <div class="absolute -bottom-32 -right-16 w-80 h-80 rounded-full bg-brand-100/60"></div>
+    <div class="relative z-10 text-center max-w-lg">
+        <p class="text-[120px] sm:text-[160px] font-extrabold leading-none tracking-tighter text-brand-800/10 select-none">404</p>
+        <div class="w-20 h-20 rounded-3xl bg-white text-brand-800 flex items-center justify-center mx-auto shadow-card -mt-16 relative z-10"><i data-lucide="compass" class="w-9 h-9"></i></div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight mt-6">This page wandered off</h1>
+        <p class="text-xs text-gray-500 mt-3 leading-relaxed">The link may be broken, the page may have been renamed, or it never existed. Try the dashboard, or search the knowledge base for what you need.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+            <a href="../../index.html" class="donezo-btn donezo-btn-primary"><i data-lucide="layout-grid" class="w-4 h-4"></i><span>Back to Dashboard</span></a>
+            <a href="../support/knowledge-base.html" class="donezo-btn donezo-btn-secondary"><i data-lucide="book-open" class="w-4 h-4"></i><span>Search Help Center</span></a>
+        </div>
+        <div class="donezo-card p-4 mt-8 flex flex-col sm:flex-row items-center gap-3 text-left">
+            <i data-lucide="life-buoy" class="w-5 h-5 text-brand-700 shrink-0"></i>
+            <p class="text-[11px] text-gray-500 leading-relaxed flex-1">Still stuck? Report the broken link and our team will fix it within one business day.</p>
+            <a href="../support/tickets.html" class="donezo-btn donezo-btn-soft shrink-0 text-[11px]">Report Issue</a>
+        </div>
+        <div class="flex items-center justify-center gap-4 mt-8 text-[11px] font-semibold text-gray-400">
+            <a href="../admin/dashboard.html" class="hover:text-brand-800">Dashboard</a><span>·</span>
+            <a href="../ecommerce/products.html" class="hover:text-brand-800">Store</a><span>·</span>
+            <a href="../auth/login.html" class="hover:text-brand-800">Sign In</a><span>·</span>
+            <a href="../saas/contact.html" class="hover:text-brand-800">Contact</a>
+        </div>
+    </div>
+</div>
+<script src="../../assets/js/donezo.js"></script>
+</body>
+</html>
