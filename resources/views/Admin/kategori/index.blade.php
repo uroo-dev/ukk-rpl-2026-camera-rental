@@ -17,19 +17,19 @@
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
-                        <thead class="bg-gray-50/80 text-[10px] uppercase tracking-wider text-gray-500 font-bold">
+                        <thead class="bg-gray-50/90 text-[10px] uppercase tracking-wider text-gray-500 font-extrabold border-b border-gray-200">
                             <tr>
-                                <th class="px-5 py-3">No</th>
-                                <th class="px-5 py-3">Nama Kategori</th>
-                                <th class="px-5 py-3">Deskripsi</th>
-                                <th class="px-5 py-3 text-center">Jumlah Alat</th>
-                                <th class="px-5 py-3 text-center">Aksi</th>
+                                <th class="px-4 py-3.5 text-center w-12">No</th>
+                                <th class="px-5 py-3.5 w-48">Nama Kategori</th>
+                                <th class="px-5 py-3.5">Deskripsi</th>
+                                <th class="px-5 py-3.5 text-center w-28">Jumlah Alat</th>
+                                <th class="px-5 py-3.5 text-center w-24">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-xs divide-y divide-gray-100">
                             @forelse ($kategori as $item)
                                 <tr class="hover:bg-brand-50/30 transition">
-                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">{{ $loop->iteration + ($kategori->currentPage() - 1) * $kategori->perPage() }}</td>
+                                    <td class="px-4 py-3.5 font-mono font-bold text-center text-brand-800">{{ $loop->iteration + ($kategori->currentPage() - 1) * $kategori->perPage() }}</td>
                                     <td class="px-5 py-3.5 font-bold text-gray-900">{{ $item->nama_kategori }}</td>
                                     <td class="px-5 py-3.5 text-gray-600 max-w-xs truncate">{{ $item->deskripsi ?: '-' }}</td>
                                     <td class="px-5 py-3.5 text-center">

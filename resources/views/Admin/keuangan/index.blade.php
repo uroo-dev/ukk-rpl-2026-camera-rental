@@ -128,10 +128,10 @@
                 <form action="{{ route('admin.keuangan.index') }}" method="GET" class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
                     <div class="flex items-center gap-2 flex-wrap">
                         <!-- Date Filter -->
-                        <div class="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-2xl px-3 py-1.5">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase">Periode:</span>
+                        <div class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-3 py-1.5">
+                            <i data-lucide="calendar" class="w-4 h-4 text-gray-400 shrink-0"></i>
                             <input type="date" name="tanggal_mulai" value="{{ request('tanggal_mulai') }}" class="bg-transparent text-xs text-gray-700 outline-none" title="Tanggal Mulai">
-                            <span class="text-xs text-gray-400">s/d</span>
+                            <span class="text-xs text-gray-400 font-bold">s/d</span>
                             <input type="date" name="tanggal_selesai" value="{{ request('tanggal_selesai') }}" class="bg-transparent text-xs text-gray-700 outline-none" title="Tanggal Selesai">
                         </div>
 
@@ -177,18 +177,18 @@
             <!-- Table of Transactions -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-gray-50/80 text-[10px] uppercase tracking-wider text-gray-500 font-bold">
+                    <thead class="bg-gray-50/90 text-[10px] uppercase tracking-wider text-gray-500 font-extrabold border-b border-gray-200">
                         <tr>
-                            <th class="px-5 py-3">No</th>
-                            <th class="px-5 py-3">Kode Transaksi</th>
-                            <th class="px-5 py-3">Pelanggan</th>
-                            <th class="px-5 py-3">Rincian Alat</th>
-                            <th class="px-5 py-3">Tgl Sewa</th>
-                            <th class="px-5 py-3">Biaya Sewa</th>
-                            <th class="px-5 py-3">Denda Telat</th>
-                            <th class="px-5 py-3">Total Arus Kas</th>
-                            <th class="px-5 py-3">Metode Bayar & Jaminan</th>
-                            <th class="px-5 py-3 text-center">Status</th>
+                            <th class="px-4 py-3.5 text-center w-12">No</th>
+                            <th class="px-5 py-3.5 w-36">Kode Transaksi</th>
+                            <th class="px-5 py-3.5 w-48">Pelanggan</th>
+                            <th class="px-5 py-3.5">Rincian Alat</th>
+                            <th class="px-5 py-3.5 w-40">Tgl Sewa</th>
+                            <th class="px-5 py-3.5 text-right w-32">Biaya Sewa</th>
+                            <th class="px-5 py-3.5 text-right w-28">Denda Telat</th>
+                            <th class="px-5 py-3.5 text-right w-36">Total Kas</th>
+                            <th class="px-5 py-3.5 w-48">Metode Bayar & Jaminan</th>
+                            <th class="px-5 py-3.5 text-center w-28">Status</th>
                         </tr>
                     </thead>
                     <tbody class="text-xs divide-y divide-gray-100">
@@ -205,47 +205,47 @@
                                 };
                             @endphp
                             <tr class="hover:bg-emerald-50/20 transition">
-                                <td class="px-5 py-3.5 font-mono font-bold text-gray-400">
+                                <td class="px-4 py-4 font-mono font-bold text-center text-gray-400">
                                     {{ $loop->iteration + ($transaksi->currentPage() - 1) * $transaksi->perPage() }}
                                 </td>
-                                <td class="px-5 py-3.5 font-mono font-bold text-gray-900">
+                                <td class="px-5 py-4 font-mono font-bold text-gray-900">
                                     <a href="{{ route('invoice.all', $item->id) }}" class="hover:underline text-brand-800">
                                         {{ $item->kode }}
                                     </a>
                                 </td>
-                                <td class="px-5 py-3.5 font-semibold text-gray-900">
+                                <td class="px-5 py-4 font-semibold text-gray-900">
                                     {{ $item->user?->nama ?? '-' }}
                                     <p class="text-[10px] text-gray-400 font-normal">{{ $item->user?->email }}</p>
                                 </td>
-                                <td class="px-5 py-3.5 text-gray-700">
+                                <td class="px-5 py-4 text-gray-700">
                                     @foreach ($item->detailPeminjaman as $d)
                                         <div class="text-[11px] mb-0.5 last:mb-0">
                                             • <strong>{{ $d->alat?->nama_alat ?? 'Alat' }}</strong>
-                                            <span class="text-gray-400">({{ $d->lama_pinjam }} Hari)</span>
+                                            <span class="text-gray-400 font-mono text-[10px]">({{ $d->lama_pinjam }} Hari)</span>
                                         </div>
                                     @endforeach
                                 </td>
-                                <td class="px-5 py-3.5 text-gray-600 text-[11px]">
-                                    <div>{{ $item->tgl_pinjam }}</div>
+                                <td class="px-5 py-4 text-gray-600 text-[11px]">
+                                    <div class="font-medium">{{ $item->tgl_pinjam }}</div>
                                     <div class="text-gray-400 text-[10px]">s/d {{ $item->tgl_kembali }}</div>
                                 </td>
-                                <td class="px-5 py-3.5 font-bold text-gray-800">
+                                <td class="px-5 py-4 text-right font-bold text-gray-800">
                                     Rp {{ number_format($item->subtotal ?? 0, 0, ',', '.') }}
                                 </td>
-                                <td class="px-5 py-3.5">
+                                <td class="px-5 py-4 text-right">
                                     @if($denda > 0)
                                         <span class="font-bold text-rose-600">Rp {{ number_format($denda, 0, ',', '.') }}</span>
                                     @else
                                         <span class="text-gray-400">-</span>
                                     @endif
                                 </td>
-                                <td class="px-5 py-3.5 font-extrabold text-emerald-700">
+                                <td class="px-5 py-4 text-right font-extrabold text-emerald-700">
                                     Rp {{ number_format($total, 0, ',', '.') }}
                                 </td>
-                                <td class="px-5 py-3.5 text-gray-600 max-w-[200px] text-[11px]">
+                                <td class="px-5 py-4 text-gray-600 max-w-[200px] text-[11px]">
                                     <p class="truncate" title="{{ $item->nama_bukti }}">{{ $item->nama_bukti ?: 'Tunai di Toko' }}</p>
                                 </td>
-                                <td class="px-5 py-3.5 text-center">
+                                <td class="px-5 py-4 text-center">
                                     <span class="px-2.5 py-1 rounded-full text-[10px] font-bold border {{ $badgeColor }}">
                                         {{ $item->status }}
                                     </span>

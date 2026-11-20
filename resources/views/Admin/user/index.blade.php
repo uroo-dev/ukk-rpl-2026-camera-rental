@@ -17,20 +17,20 @@
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-gray-50/80 text-[10px] uppercase tracking-wider text-gray-500 font-bold">
+                    <thead class="bg-gray-50/90 text-[10px] uppercase tracking-wider text-gray-500 font-extrabold border-b border-gray-200">
                         <tr>
-                            <th class="px-5 py-3">No</th>
-                            <th class="px-5 py-3">Nama</th>
-                            <th class="px-5 py-3">Email</th>
-                            <th class="px-5 py-3 text-center">Role</th>
-                            <th class="px-5 py-3">Terakhir Update</th>
-                            <th class="px-5 py-3 text-center">Aksi</th>
+                            <th class="px-4 py-3.5 text-center w-12">No</th>
+                            <th class="px-5 py-3.5 w-64">Nama Staf</th>
+                            <th class="px-5 py-3.5">Email Pengguna</th>
+                            <th class="px-5 py-3.5 text-center w-28">Hak Akses</th>
+                            <th class="px-5 py-3.5 w-44">Terakhir Diperbarui</th>
+                            <th class="px-5 py-3.5 text-center w-24">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="text-xs divide-y divide-gray-100">
                         @forelse ($user as $u)
                             <tr class="hover:bg-brand-50/30 transition">
-                                <td class="px-5 py-3.5 font-mono font-bold text-brand-800">{{ $loop->iteration + ($user->currentPage() - 1) * $user->perPage() }}</td>
+                                <td class="px-4 py-3.5 font-mono font-bold text-center text-brand-800">{{ $loop->iteration + ($user->currentPage() - 1) * $user->perPage() }}</td>
                                 <td class="px-5 py-3.5 font-bold text-gray-900">
                                     <div class="flex items-center gap-2.5">
                                         <div class="w-8 h-8 rounded-full bg-brand-50 text-brand-800 flex items-center justify-center font-bold text-xs uppercase">

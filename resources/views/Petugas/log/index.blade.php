@@ -19,19 +19,19 @@
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-gray-50/80 text-[10px] uppercase tracking-wider text-gray-500 font-bold">
+                    <thead class="bg-gray-50/90 text-[10px] uppercase tracking-wider text-gray-500 font-extrabold border-b border-gray-200">
                         <tr>
-                            <th class="px-5 py-3">No</th>
-                            <th class="px-5 py-3">Petugas</th>
-                            <th class="px-5 py-3">Aksi</th>
-                            <th class="px-5 py-3">Keterangan Aktivitas</th>
-                            <th class="px-5 py-3">Waktu Eksekusi</th>
+                            <th class="px-4 py-3.5 text-center w-12">No</th>
+                            <th class="px-5 py-3.5 w-52">Petugas</th>
+                            <th class="px-5 py-3.5 w-48">Aksi</th>
+                            <th class="px-5 py-3.5">Keterangan Aktivitas</th>
+                            <th class="px-5 py-3.5 w-44">Waktu Eksekusi</th>
                         </tr>
                     </thead>
                     <tbody class="text-xs divide-y divide-gray-100">
                         @forelse ($log as $l)
                             <tr class="hover:bg-brand-50/30 transition">
-                                <td class="px-5 py-3.5 font-bold text-gray-500">{{ $loop->iteration + ($log->currentPage() - 1) * $log->perPage() }}</td>
+                                <td class="px-4 py-3.5 font-mono font-bold text-center text-brand-800">{{ $loop->iteration + ($log->currentPage() - 1) * $log->perPage() }}</td>
                                 <td class="px-5 py-3.5 font-semibold text-gray-900">{{ $l->user?->nama ?? 'Petugas' }}</td>
                                 <td class="px-5 py-3.5">
                                     <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-50 text-brand-800 border border-brand-200">

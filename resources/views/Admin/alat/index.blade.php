@@ -17,26 +17,26 @@
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
-                        <thead class="bg-gray-50/80 text-[10px] uppercase tracking-wider text-gray-500 font-bold">
+                        <thead class="bg-gray-50/90 text-[10px] uppercase tracking-wider text-gray-500 font-extrabold border-b border-gray-200">
                             <tr>
-                                <th class="px-5 py-3">No</th>
-                                <th class="px-5 py-3">Foto</th>
-                                <th class="px-5 py-3">Nama Alat</th>
-                                <th class="px-5 py-3">Kategori</th>
-                                <th class="px-5 py-3 text-center">Stok</th>
-                                <th class="px-5 py-3">Harga/Hari</th>
-                                <th class="px-5 py-3 text-center">Aksi</th>
+                                <th class="px-4 py-3.5 text-center w-12">No</th>
+                                <th class="px-5 py-3.5 text-center w-16">Foto</th>
+                                <th class="px-5 py-3.5">Nama Alat</th>
+                                <th class="px-5 py-3.5">Kategori</th>
+                                <th class="px-5 py-3.5 text-center w-20">Stok</th>
+                                <th class="px-5 py-3.5 text-right w-28">Harga/Hari</th>
+                                <th class="px-5 py-3.5 text-center w-24">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-xs divide-y divide-gray-100">
                             @forelse ($alat as $item)
                                 <tr class="hover:bg-brand-50/30 transition">
-                                    <td class="px-5 py-3.5 font-mono font-bold text-brand-800">{{ $loop->iteration + ($alat->currentPage() - 1) * $alat->perPage() }}</td>
-                                    <td class="px-5 py-3.5">
+                                    <td class="px-4 py-3.5 font-mono font-bold text-center text-brand-800">{{ $loop->iteration + ($alat->currentPage() - 1) * $alat->perPage() }}</td>
+                                    <td class="px-5 py-3.5 text-center">
                                         @if ($item->gambar)
-                                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_alat }}" class="w-10 h-10 rounded-xl object-cover border border-gray-200 shadow-xs">
+                                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_alat }}" class="w-10 h-10 rounded-xl object-cover border border-gray-200 shadow-xs mx-auto">
                                         @else
-                                            <div class="w-10 h-10 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400">
+                                            <div class="w-10 h-10 rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 mx-auto">
                                                 <i data-lucide="camera" class="w-5 h-5"></i>
                                             </div>
                                         @endif
@@ -63,7 +63,7 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td class="px-5 py-3.5 font-bold text-gray-900">Rp {{ number_format($item->harga_sewa, 0, ',', '.') }}</td>
+                                    <td class="px-5 py-3.5 text-right font-bold text-gray-900">Rp {{ number_format($item->harga_sewa, 0, ',', '.') }}</td>
                                     <td class="px-5 py-3.5 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
                                             <!-- Tooltip Edit -->
